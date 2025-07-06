@@ -1,0 +1,321 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - InterviewAI {% block title %}
+    {% endblock %}   </title>
+
+    <meta name="description" content="Get in touch with the InterviewAI team for support, feedback, or general inquiries.">
+    <meta name="author" content="InterviewAI">
+    <meta property="og:title" content="Contact Us - InterviewAI">
+    <meta property="og:description" content="Get in touch with the InterviewAI team for support, feedback, or general inquiries.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="images/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@interviewai">
+    <meta name="twitter:image" content="images/twitter-image.png">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'contact/contact.css' %}">
+    <link rel="icon" href="{% static 'images/logo.svg' %}">
+</head>
+<body>
+   <nav class="navbar">
+        <div class="container">
+            <a href="{% url 'landing' %}" class="logo">
+                <img src="{% static 'images/logo.svg' %}" alt="InterviewAI">
+            </a>
+            <div class="desktop-nav">
+                <div class="nav_contents">
+                    <a href="{% url 'landing' %}" class="nav-link {% if request.resolver_match.url_name == 'landing' %}active{% endif %}">Home</a>
+                    <a href="{% url 'guide' %}" class="nav-link {% if request.resolver_match.url_name == 'guide' %}active{% endif %}">How it Works</a>
+                    <a href="{% url 'faq' %}" class="nav-link {% if request.resolver_match.url_name == 'faq' %}active{% endif %}">FAQ</a>
+                    <a href="{% url 'about' %}" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About Us</a>
+                    <a href="{% url 'contact' %}" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a>
+                </div>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'profile' %}" class="btn btn-outline">Profile</a>
+                    <a href="{% url 'logout' %}" class="btn btn-primary">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-outline {% if request.resolver_match.url_name == 'login' %}active{% endif %}">Log in</a>
+                    <a href="{% url 'signup' %}" class="btn btn-primary {% if request.resolver_match.url_name == 'signup' %}active{% endif %}">Sign up</a>
+                {% endif %}
+            </div>
+            <button class="mobile-menu-btn" aria-label="Toggle menu" aria-expanded="false">
+                <span class="menu-icon"></span>
+            </button>
+        </div>
+        <div class="mobile-nav">
+            <a href="{% url 'landing' %}" class="nav-link {% if request.resolver_match.url_name == 'landing' %}active{% endif %}">Home</a>
+            <a href="{% url 'guide' %}" class="nav-link {% if request.resolver_match.url_name == 'guide' %}active{% endif %}">How it Works</a>
+            <a href="{% url 'faq' %}" class="nav-link {% if request.resolver_match.url_name == 'faq' %}active{% endif %}">FAQ</a>
+            <a href="{% url 'about' %}" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About Us</a>
+            <a href="{% url 'contact' %}" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a>
+            <div class="mobile-buttons">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'profile' %}" class="btn btn-outline">Profile</a>
+                    <a href="{% url 'logout' %}" class="btn btn-primary">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-outline {% if request.resolver_match.url_name == 'login' %}active{% endif %}">Log in</a>
+                    <a href="{% url 'signup' %}" class="btn btn-primary {% if request.resolver_match.url_name == 'signup' %}active{% endif %}">Sign up</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>      
+
+    <main>
+        <section class="contact-hero-section">
+            <div class="container">
+                <div class="section-header">
+                    <h1 class="hero-title">Get in Touch</h1>
+                    <p class="hero-description">
+                        We're here to assist you with any questions, feedback, or support needs. Reach out today!
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact-content-section">
+            <div class="container">
+                <div class="contact-grid">
+                    <div class="contact-info-column">
+                        <h2 class="section-title">Contact Information</h2>
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                </svg>
+                            </div>
+                            <div class="contact-details">
+                                <h3 class="contact-type">Email</h3>
+                                <a href="mailto:interviewaitest@gmail.com" class="contact-value">interviewaitest@gmail.com</a>
+                                <p class="contact-description">For general inquiries and support</p>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"></path>
+                                </svg>
+                            </div>
+                            <div class="contact-details">
+                                <h3 class="contact-type">Phone</h3>
+                                <a href="tel:+9779841871781" class="contact-value">+977-9841871781</a>
+                                <p class="contact-description">Monday - Friday, 9am - 5pm NPT</p>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"></path>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                </svg>
+                            </div>
+                            <div class="contact-details">
+                                <h3 class="contact-type">Office</h3>
+                                <p class="contact-value">Maitidevi, Kathmandu<br>Nepal</p>
+                                <p class="contact-description">By appointment only</p>
+                            </div>
+                        </div>
+                        <div class="social-section">
+                            <h3 class="social-title">Connect With Us</h3>
+                            <div class="social-links">
+                                <a href="#" class="social-link" aria-label="Facebook">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
+                                    </svg>
+                                </a>
+                                <a href="#" class="social-link" aria-label="Twitter">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
+                                    </svg>
+                                </a>
+                                <a href="#" class="social-link" aria-label="LinkedIn">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path>
+                                        <circle cx="4" cy="4" r="2"></circle>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-form-column">
+                        <h2 class="section-title">Send a Message</h2>
+                        <form class="contact-form" id="contactForm" aria-labelledby="form-title">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" id="name" name="name" placeholder="Your name" required aria-required="true">
+                                <span class="error-message" id="name-error"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" placeholder="Your email address" required aria-required="true">
+                                <span class="error-message" id="email-error"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="topic">Topic</label>
+                                <select id="topic" name="topic" required aria-required="true">
+                                    <option value="" disabled selected>Select a topic</option>
+                                    <option value="general">General Inquiry</option>
+                                    <option value="support">Technical Support</option>
+                                    <option value="feedback">Feedback</option>
+                                    <option value="billing">Billing Question</option>
+                                    <option value="partnership">Partnership Opportunity</option>
+                                </select>
+                                <span class="error-message" id="topic-error"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Message</label>
+                                <textarea id="message" name="message" rows="5" placeholder="How can we help you?" required aria-required="true"></textarea>
+                                <span class="error-message" id="message-error"></span>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-checkbox">
+                                    <input type="checkbox" id="privacy" name="privacy" required aria-required="true">
+                                    <label for="privacy">I agree to the <a href="privacy.html">Privacy Policy</a></label>
+                                </div>
+                                <span class="error-message" id="privacy-error"></span>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block" aria-label="Submit form">Send Message</button>
+                            <div id="formStatus" class="form-status" role="alert"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="faq-preview-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-label">Support</h2>
+                    <h3 class="section-title">Frequently Asked Questions</h3>
+                    <p class="section-description">
+                        Find quick answers to common questions below, or contact us for more help.
+                    </p>
+                </div>
+               <div class="faq-accordion">
+                    <div class="faq-item">
+                        <button class="faq-question" aria-controls="faq-answer-1" id="faq-question-1" aria-expanded="false">
+                            <span class="faq-question-text">What are your business hours?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer" id="faq-answer-1" role="region" aria-labelledby="faq-question-1" hidden>
+                            <p>Our support team is available Monday through Friday, 9am to 5pm Nepal Time (NPT). Email inquiries received outside business hours will be addressed the next business day.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" aria-controls="faq-answer-2" id="faq-question-2" aria-expanded="false">
+                            <span class="faq-question-text">How quickly will I receive a response?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer" id="faq-answer-2" role="region" aria-labelledby="faq-question-2" hidden>
+                            <p>We aim to respond to all inquiries within 24 business hours. For urgent technical issues, premium subscribers receive priority support.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" aria-controls="faq-answer-3" id="faq-question-3" aria-expanded="false">
+                            <span class="faq-question-text">Do you offer phone support?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer" id="faq-answer-3" role="region" aria-labelledby="faq-question-3" hidden>
+                            <p>Phone support is available for premium subscribers. Free users can access our email support and knowledge base.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="view-all-faqs">
+                    <a href="{% url 'faq' %}" class="btn btn-outline-primary">View All FAQs</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="map-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Visit Our Office</h2>
+                    <p class="section-description">Maitidevi, Kathmandu, Nepal (By appointment only)</p>
+                </div>
+                <div class="map-container">
+                    <iframe src="https://maps.google.com/maps?q=Kathmandu&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="450" class="contact-map-frame" allowfullscreen="" loading="lazy" title="Map showing location of Maitidevi, Kathmandu, Nepal"></iframe>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="cta-title">Ready to Ace Your Interview?</h2>
+            <p class="cta-description">Start practicing with InterviewAI today.</p>
+            <div class="cta-buttons">
+                <a href="{% url 'interview_form' %}" class="btn btn-primary">Start Interview</a>
+                <a href="{% url 'signup' %}" class="btn btn-outline-primary">Create Account</a>
+            </div>
+        </div>
+    </section>
+
+   <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="{% url 'landing' %}" class="logo">
+                        <img src="{% static 'images/logo.svg' %}" alt="InterviewAI" class="footer-logo">
+                    </a>
+                    <p class="brand-description">
+                        InterviewAI uses advanced AI to prepare you for job interviews with realistic mock interviews and personalized feedback.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Facebook">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Twitter">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="LinkedIn">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zM17.5 6.5h.01"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3 class="footer-title">Resources</h3>
+                    <ul class="link-list">
+                        <li><a href="{% url 'guide' %}">How it Works</a></li>
+                        <li><a href="{% url 'pricing' %}">Pricing</a></li>
+                        <li><a href="{% url 'faq' %}">FAQ</a></li>
+                        <li><a href="{% url 'blog' %}">Blog</a></li>
+                        <li><a href="{% url 'testimonials' %}">Testimonials</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3 class="footer-title">Company</h3>
+                    <ul class="link-list">
+                        <li><a href="{% url 'about' %}">About Us</a></li>
+                        <li><a href=" {% url 'contact' %}">Contact Us</a></li>
+                        <li><a href="{% url 'privacy' %}">Privacy Policy</a></li>
+                        <li><a href="{% url 'terms' %}">Terms of Service</a></li>
+                    </ul>
+                </div>
+            <div class="footer-bottom">
+                <p class="copyright">© <span id="current-year"></span> InterviewAI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'contact/contact.js' %}"></script>
+</body>
+</html>

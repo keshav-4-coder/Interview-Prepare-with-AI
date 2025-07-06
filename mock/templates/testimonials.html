@@ -1,0 +1,244 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testimonials - InterviewAI {% block title %}
+    {% endblock %}    </title>
+
+    <meta name="description" content="Hear from our users about how InterviewAI helped them ace their job interviews and land their dream jobs.">
+    <meta name="author" content="InterviewAI">
+    <meta property="og:title" content="Testimonials - InterviewAI">
+    <meta property="og:description" content="Hear from our users about how InterviewAI helped them ace their job interviews and land their dream jobs.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="images/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@interviewai">
+    <meta name="twitter:image" content="images/twitter-image.png">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'C:\Users\HP\Desktop\MockupFinalProject\static\testimonials\testominals.css' %}">
+    <link rel="icon" href="{% static 'images/logo.svg' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="{% url 'landing' %}" class="logo">
+                <img src="{% static 'images/logo.svg' %}" alt="InterviewAI">
+            </a>
+            <div class="desktop-nav">
+                <div class="nav_contents">
+                    <a href="{% url 'landing' %}" class="nav-link {% if request.resolver_match.url_name == 'landing' %}active{% endif %}">Home</a>
+                    <a href="{% url 'guide' %}" class="nav-link {% if request.resolver_match.url_name == 'guide' %}active{% endif %}">How it Works</a>
+                    <a href="{% url 'faq' %}" class="nav-link {% if request.resolver_match.url_name == 'faq' %}active{% endif %}">FAQ</a>
+                    <a href="{% url 'about' %}" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About Us</a>
+                    <a href="{% url 'contact' %}" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a>
+                </div>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'profile' %}" class="btn btn-outline">Profile</a>
+                    <a href="{% url 'logout' %}" class="btn btn-primary">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-outline {% if request.resolver_match.url_name == 'login' %}active{% endif %}">Log in</a>
+                    <a href="{% url 'signup' %}" class="btn btn-primary {% if request.resolver_match.url_name == 'signup' %}active{% endif %}">Sign up</a>
+                {% endif %}
+            </div>
+            <button class="mobile-menu-btn" aria-label="Toggle menu" aria-expanded="false">
+                <span class="menu-icon"></span>
+            </button>
+        </div>
+        <div class="mobile-nav">
+            <a href="{% url 'landing' %}" class="nav-link {% if request.resolver_match.url_name == 'landing' %}active{% endif %}">Home</a>
+            <a href="{% url 'guide' %}" class="nav-link {% if request.resolver_match.url_name == 'guide' %}active{% endif %}">How it Works</a>
+            <a href="{% url 'faq' %}" class="nav-link {% if request.resolver_match.url_name == 'faq' %}active{% endif %}">FAQ</a>
+            <a href="{% url 'about' %}" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About Us</a>
+            <a href="{% url 'contact' %}" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a>
+            <div class="mobile-buttons">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'profile' %}" class="btn btn-outline">Profile</a>
+                    <a href="{% url 'logout' %}" class="btn btn-primary">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-outline {% if request.resolver_match.url_name == 'login' %}active{% endif %}">Log in</a>
+                    <a href="{% url 'signup' %}" class="btn btn-primary {% if request.resolver_match.url_name == 'signup' %}active{% endif %}">Sign up</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="testimonials-hero-section">
+            <div class="container">
+                <div class="section-header">
+                    <h1 class="hero-title">Success Stories from Our Users</h1>
+                    <p class="hero-description">
+                        Discover how InterviewAI has empowered professionals to excel in their job interviews and secure their dream roles.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="testimonials-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-label">Testimonials</h2>
+                    <h3 class="section-title">What Our Users Say</h3>
+                    <p class="section-description">
+                        Hear from professionals who transformed their interview skills with InterviewAI.
+                    </p>
+                </div>
+                <div class="testimonials-carousel" role="region" aria-live="polite">
+                    <div class="carousel-track">
+                        <div class="testimonial-card">
+                            <div class="testimonial-header">
+                                <img class="testimonial-image" src="{% static 'images/ashish.png' %}" alt="Aashish">
+                                <div class="testimonial-author">
+                                    <h4 class="author-name">Aashish Shrestha</h4>
+                                    <p class="author-role">Student</p>
+                                </div>
+                            </div>
+                            <p class="testimonial-content">"InterviewAI helped me land my dream job at a top tech company. The realistic interview simulations and detailed feedback were invaluable for my preparation."</p>
+                        </div>
+                        <div class="testimonial-card">
+                            <div class="testimonial-header">
+                                <img class="testimonial-image" src="{% static 'images/keshav.png' %}" alt="keshav">
+                                <div class="testimonial-author">
+                                    <h4 class="author-name">Keshav Thapa</h4>
+                                    <p class="author-role">Product Manager</p>
+                                </div>
+                            </div>
+                            <p class="testimonial-content">"As someone who always gets nervous during interviews, this platform gave me the confidence I needed. The AI interviewer felt so realistic!"</p>
+                        </div>
+                        <div class="testimonial-card">
+                            <div class="testimonial-header">
+                                <img class="testimonial-image" src="{% static 'images/keshav.png' %}" alt="keshav">
+                                <div class="testimonial-author">
+                                    <h4 class="author-name">Keshav Thapa</h4>
+                                    <p class="author-role">Marketing Director</p>
+                                </div>
+                            </div>
+                            <p class="testimonial-content">"The industry-specific questions were spot on. I practiced with InterviewAI for two weeks and felt completely prepared for my actual interview."</p>
+                        </div>
+                        <div class="testimonial-card">
+                            <div class="testimonial-header">
+                                <img class="testimonial-image" src="{% static 'images/ashish.png' %}" alt="alex">
+                                <div class="testimonial-author">
+                                    <h4 class="author-name">Aashish Shrestha</h4>
+                                    <p class="author-role">Data Scientist</p>
+                                </div>
+                            </div>
+                            <p class="testimonial-content">"The performance analytics helped me identify my weaknesses and improve over time. I highly recommend InterviewAI to anyone preparing for a job interview."</p>
+                        </div>
+                        <div class="testimonial-card">
+                            <div class="testimonial-header">
+                                <img class="testimonial-image" src="{% static 'images/anil.png' %}" alt="Lisa">
+                                <div class="testimonial-author">
+                                    <h4 class="author-name">Anil Bohora</h4>
+                                    <p class="author-role">Financial Analyst</p>
+                                </div>
+                            </div>
+                            <p class="testimonial-content">"InterviewAI's personalized feedback was a game-changer. It helped me refine my answers and present myself more confidently."</p>
+                        </div>
+                        <div class="testimonial-card">
+                            <div class="testimonial-header">
+                                <img class="testimonial-image" src="{% static 'images/kisan.png' %}" alt="David Martinez">
+                                <div class="testimonial-author">
+                                    <h4 class="author-name">Kishan Chaudhary</h4>
+                                    <p class="author-role">UX Designer</p>
+                                </div>
+                            </div>
+                            <p class="testimonial-content">"Practicing with InterviewAI felt like having a personal coach. The tailored questions and feedback made all the difference in my interview success."</p>
+                        </div>
+                    </div>
+                    <button class="carousel-btn prev" aria-label="Previous testimonial">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M15 18l-6-6 6-6"/>
+                        </svg>
+                    </button>
+                    <button class="carousel-btn next" aria-label="Next testimonial">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 18l6-6-6-6"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="view-more">
+                    <a href="{% url 'signup' %}" class="btn btn-primary">Join InterviewAI Today</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="container">
+                <h2 class="cta-title">Ready to Ace Your Interview?</h2>
+                <p class="cta-description">Start practicing with InterviewAI and join our success stories.</p>
+                <div class="cta-buttons">
+                    <a href="interview-form.html" class="btn btn-primary">Start Interview</a>
+                    <a href="signup.html" class="btn btn-outline-primary">Create Account</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="{% url 'landing' %}" class="logo">
+                        <img src="{% static 'images/logo.svg' %}" alt="InterviewAI" class="footer-logo">
+                    </a>
+                    <p class="brand-description">
+                        InterviewAI uses advanced AI to prepare you for job interviews with realistic mock interviews and personalized feedback.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Facebook">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Twitter">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="LinkedIn">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zM17.5 6.5h.01"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3 class="footer-title">Resources</h3>
+                    <ul class="link-list">
+                        <li><a href="{% url 'guide' %}">How it Works</a></li>
+                        <li><a href="{% url 'pricing' %}">Pricing</a></li>
+                        <li><a href="{% url 'faq' %}">FAQ</a></li>
+                        <li><a href="{% url 'blog' %}">Blog</a></li>
+                        <li><a href="{% url 'testimonials' %}">Testimonials</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3 class="footer-title">Company</h3>
+                    <ul class="link-list">
+                        <li><a href="{% url 'about' %}">About Us</a></li>
+                        <li><a href=" {% url 'contact' %}">Contact Us</a></li>
+                        <li><a href="{% url 'privacy' %}">Privacy Policy</a></li>
+                        <li><a href="{% url 'terms' %}">Terms of Service</a></li>
+                    </ul>
+                </div>
+            <div class="footer-bottom">
+                <p class="copyright">© <span id="current-year"></span> InterviewAI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'C:\Users\HP\Desktop\MockupFinalProject\static\testimonials\testominals.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,442 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InterviewAI - AI-Powered Interview Practice {% block title %}{% endblock %}</title>
+    <meta name="description" content="Practice job interviews with AI-powered mock interviews. Get personalized feedback and land your dream job.">
+    <meta name="author" content="InterviewAI">
+    <meta property="og:title" content="InterviewAI - AI-Powered Interview Practice">
+    <meta property="og:description" content="Practice job interviews with AI-powered mock interviews. Get personalized feedback and land your dream job.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="{% static 'images/og-image.png' %}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@interviewai">
+    <meta name="twitter:image" content="{% static 'images/twitter-image.png' %}">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'C:\Users\HP\Desktop\MockupFinalProject\static\profile\profile.css' %}">
+    <link rel="icon" href="{% static 'images/logo.svg' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="{% url 'landing' %}" class="logo">
+                <img src="{% static 'images/logo.svg' %}" alt="InterviewAI">
+            </a>
+            <div class="desktop-nav">
+                <div class="nav_contents">
+                    <a href="{% url 'landing' %}" class="nav-link {% if request.resolver_match.url_name == 'landing' %}active{% endif %}">Home</a>
+                    <a href="{% url 'guide' %}" class="nav-link {% if request.resolver_match.url_name == 'guide' %}active{% endif %}">How it Works</a>
+                    <a href="{% url 'faq' %}" class="nav-link {% if request.resolver_match.url_name == 'faq' %}active{% endif %}">FAQ</a>
+                    <a href="{% url 'about' %}" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About Us</a>
+                    <a href="{% url 'contact' %}" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a>
+                </div>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'profile' %}" class="btn btn-outline">Profile</a>
+                    <a href="{% url 'logout' %}" class="btn btn-primary">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-outline {% if request.resolver_match.url_name == 'login' %}active{% endif %}">Log in</a>
+                    <a href="{% url 'signup' %}" class="btn btn-primary {% if request.resolver_match.url_name == 'signup' %}active{% endif %}">Sign up</a>
+                {% endif %}
+            </div>
+            <button class="mobile-menu-btn" aria-label="Toggle menu" aria-expanded="false">
+                <span class="menu-icon"></span>
+            </button>
+        </div>
+        <div class="mobile-nav">
+            <a href="{% url 'landing' %}" class="nav-link {% if request.resolver_match.url_name == 'landing' %}active{% endif %}">Home</a>
+            <a href="{% url 'guide' %}" class="nav-link {% if request.resolver_match.url_name == 'guide' %}active{% endif %}">How it Works</a>
+            <a href="{% url 'faq' %}" class="nav-link {% if request.resolver_match.url_name == 'faq' %}active{% endif %}">FAQ</a>
+            <a href="{% url 'about' %}" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About Us</a>
+            <a href="{% url 'contact' %}" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a>
+            <div class="mobile-buttons">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'profile' %}" class="btn btn-outline">Profile</a>
+                    <a href="{% url 'logout' %}" class="btn btn-primary">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-outline {% if request.resolver_match.url_name == 'login' %}active{% endif %}">Log in</a>
+                    <a href="{% url 'signup' %}" class="btn btn-primary {% if request.resolver_match.url_name == 'signup' %}active{% endif %}">Sign up</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% block content %}
+    {% endblock %}
+</head>
+<body>
+    <div class="scores-list" id="scoresList">
+    {% for session in sessions %}
+    <div class="score-item">
+        <div class="score-info">
+            <div class="score-type">{{ session.interview_type }}</div>
+            <div class="score-meta">{{ session.date|date:"Y-m-d" }}</div>
+        </div>
+        <div class="score-result">
+            <div class="score-value">{{ session.overall_score }}%</div>
+            <div class="score-grade">{{ session.average_score|floatformat:1 }}%</div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+    <div class="container">
+        <div class="main-content">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="profile-summary">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%233b82f6'/%3E%3Ctext x='50' y='60' font-family='Inter' font-size='32' fill='white' text-anchor='middle'%3EJD%3C/text%3E%3C/svg%3E" alt="Profile" class="profile-avatar" id="profileAvatar">
+                    <div class="profile-name" id="profileDisplayName">John Doe</div>
+                    <div class="profile-role" id="profileDisplayRole">Software Developer</div>
+                    <div class="profile-stats">
+                        <div class="stat-box">
+                            <div class="stat-number" id="sidebarTotalInterviews">24</div>
+                            <div class="stat-label">Interviews</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number" id="sidebarAvgScore">78%</div>
+                            <div class="stat-label">Avg Score</div>
+                        </div>
+                    </div>
+                    <input type="file" id="profilePictureUpload" accept="image/*" style="display: none;">
+                    <button class="btn btn-outline upload-btn" id="changePhotoBtn">
+                        Change Photo
+                    </button>
+                </div>
+                <nav class="sidebar-nav">
+                    <a href="#" class="nav-item active" data-tab="profile">Profile Information</a>
+                    <a href="#" class="nav-item" data-tab="scores">Practice Scores</a>
+                    <a href="#" class="nav-item" data-tab="settings">Account Settings</a>
+                </nav>
+            </aside>
+            <!-- Main Content -->
+            <main class="content-area">
+                <!-- Profile Tab -->
+                <div id="profile-tab" class="tab-content active">
+                    <div class="content-header">
+                        <h1 class="content-title">Profile Information</h1>
+                        <p class="content-subtitle">Manage your personal information and professional details</p>
+                    </div>
+                    <div class="content-body">
+                        <form class="profile-form" id="profileForm">
+                            <div class="form-section">
+                                <div class="section-header">
+                                    <h2 class="section-title">Personal Information</h2>
+                                    <p class="section-description">Update your basic personal details</p>
+                                </div>
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label class="form-label" for="firstName">First Name</label>
+                                        <input type="text" id="firstName" class="form-input" value="John" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="lastName">Last Name</label>
+                                        <input type="text" id="lastName" class="form-input" value="Doe" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="email">Email Address</label>
+                                        <input type="email" id="email" class="form-input" value="john.doe@example.com" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="phone">Phone Number</label>
+                                        <input type="tel" id="phone" class="form-input" value="+1 (555) 123-4567">
+                                    </div>
+                                    <div class="form-group full-width">
+                                        <label class="form-label" for="location">Location</label>
+                                        <input type="text" id="location" class="form-input" value="New York, NY" placeholder="City, State/Country">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-section">
+                                <div class="section-header">
+                                    <h2 class="section-title">Professional Information</h2>
+                                    <p class="section-description">Tell us about your professional background</p>
+                                </div>
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label class="form-label" for="profession">Current Position</label>
+                                        <input type="text" id="profession" class="form-input" value="Software Developer">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="experience">Years of Experience</label>
+                                        <select id="experience" class="form-select">
+                                            <option value="0-1">0-1 years</option>
+                                            <option value="2-3">2-3 years</option>
+                                            <option value="4-5" selected>4-5 years</option>
+                                            <option value="6-10">6-10 years</option>
+                                            <option value="10+">10+ years</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group full-width">
+                                        <label class="form-label" for="bio">Professional Bio</label>
+                                        <textarea id="bio" class="form-textarea" placeholder="Tell us about your professional background, skills, and career goals...">Passionate software developer with expertise in full-stack development and AI technologies. Currently seeking opportunities in innovative tech companies.</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="action-buttons">
+                                <button type="submit" class="btn-save">Save Changes</button>
+                                <button type="button" class="btn-cancel">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- Scores Tab -->
+                <div id="scores-tab" class="tab-content">
+                    <div class="content-header">
+                        <h1 class="content-title">Practice Scores</h1>
+                        <p class="content-subtitle">Track your interview performance and progress over time</p>
+                    </div>
+                    <div class="content-body">
+                        <div class="scores-overview">
+                            <div class="score-chart-container">
+                                <div class="chart-header">
+                                    <h3 class="chart-title">Performance Trend</h3>
+                                    <p class="chart-subtitle">Your scores over the last 30 days</p>
+                                </div>
+                                <div class="chart-placeholder">
+                                    Interactive Score Chart (Coming Soon)
+                                </div>
+                                <div class="progress-section">
+                                    <div class="progress-header">
+                                        <span class="progress-title">Overall Progress</span>
+                                        <span class="progress-value">75% Improvement</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 75%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="performance-metrics">
+                                <div class="metric-card">
+                                    <div class="metric-value" id="totalInterviews">24</div>
+                                    <div class="metric-label">Total Interviews</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-value" id="avgScore">78%</div>
+                                    <div class="metric-label">Average Score</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-header">
+                            <h2 class="section-title">Recent Practice Sessions</h2>
+                            <p class="section-description">Your latest interview practice results</p>
+                        </div>
+                        <div class="scores-list" id="scoresList">
+                            <!-- Scores will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                <!-- Settings Tab -->
+                <div id="settings-tab" class="tab-content">
+                    <div class="content-header">
+                        <h1 class="content-title">Account Settings</h1>
+                        <p class="content-subtitle">Manage your account preferences and privacy settings</p>
+                    </div>
+                    <div class="content-body">
+                        <div class="settings-grid">
+                            <div class="settings-group">
+                                <h3 class="settings-group-title">Notifications</h3>
+                                <div class="setting-item">
+                                    <span class="setting-label">Email Notifications</span>
+                                    <div class="setting-control">
+                                        <div class="toggle active" data-setting="notifications"></div>
+                                    </div>
+                                </div>
+                                <div class="setting-item">
+                                    <span class="setting-label">Practice Reminders</span>
+                                    <div class="setting-control">
+                                        <div class="toggle" data-setting="reminders"></div>
+                                    </div>
+                                </div>
+                                <div class="setting-item">
+                                    <span class="setting-label">Score Updates</span>
+                                    <div class="setting-control">
+                                        <div class="toggle active" data-setting="score-updates"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="settings-group">
+                                <h3 class="settings-group-title">Preferences</h3>
+                                <div class="setting-item">
+                                    <span class="setting-label">Dark Mode</span>
+                                    <div class="setting-control">
+                                        <div class="toggle" data-setting="dark-mode"></div>
+                                    </div>
+                                </div>
+                                <div class="setting-item">
+                                    <span class="setting-label">Language</span>
+                                    <div class="setting-control">
+                                        <select class="form-select" style="min-width: 120px;">
+                                            <option>English</option>
+                                            <option>Spanish</option>
+                                            <option>French</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="setting-item">
+                                    <span class="setting-label">Timezone</span>
+                                    <div class="setting-control">
+                                        <select class="form-select" style="min-width: 120px;">
+                                            <option>EST (UTC-5)</option>
+                                            <option>PST (UTC-8)</option>
+                                            <option>GMT (UTC+0)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings-grid" style="margin-top: 32px;">
+                            <div class="settings-group">
+                                <h3 class="settings-group-title">Account</h3>
+                                <div class="setting-item">
+                                    <span class="setting-label">Current Plan</span>
+                                    <div class="setting-control">
+                                        <span style="color: #3b82f6; font-weight: 600;">Pro Plan</span>
+                                    </div>
+                                </div>
+                                <div class="setting-item">
+                                    <span class="setting-label">Subscription</span>
+                                    <div class="setting-control">
+                                        <a href="#" class="btn btn-outline" id="manageSubscriptionBtn">Manage</a>
+                                    </div>
+                                </div>
+                                <div class="setting-item">
+                                    <span class="setting-label">Billing</span>
+                                    <div class="setting-control">
+                                        <a href="#" class="btn btn-outline" id="viewBillingBtn">View History</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="settings-group">
+                                <h3 class="settings-group-title">Support</h3>
+                                <div class="setting-item">
+                                    <span class="setting-label">Help Center</span>
+                                    <div class="setting-control">
+                                        <a href="#" class="btn btn-outline" id="helpCenterBtn">Get Help</a>
+                                    </div>
+                                </div>
+                                <div class="setting-item">
+                                    <span class="setting-label">Contact Support</span>
+                                    <div class="setting-control">
+                                        <a href="#" class="btn btn-outline" id="contactSupportBtn">Contact</a>
+                                    </div>
+                                </div>
+                                <div class="setting-item">
+                                    <span class="setting-label">Log Out</span>
+                                    <div class="setting-control">
+                                        <a href="#" class="btn btn-primary" id="logoutBtn2">Log Out</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="{% url 'landing' %}" class="logo">
+                    <img src="{% static 'images/logo.svg' %}" alt="InterviewAI" class="footer-logo">
+                </a>
+                <p class="brand-description">
+                    InterviewAI uses advanced AI to prepare you for job interviews with realistic mock interviews and personalized feedback.
+                </p>
+                <div class="social-links">
+                    <a href="#" class="social-link" aria-label="Facebook">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Twitter">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link" aria-label="LinkedIn">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Instagram">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zM17.5 6.5h.01"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h3 class="footer-title">Resources</h3>
+                <ul class="link-list">
+                    <li><a href="{% url 'guide' %}">How it Works</a></li>
+                    <li><a href="{% url 'pricing' %}">Pricing</a></li>
+                    <li><a href="{% url 'faq' %}">FAQ</a></li>
+                    <li><a href="{% url 'blog' %}">Blog</a></li>
+                    <li><a href="{% url 'testimonials' %}">Testimonials</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3 class="footer-title">Company</h3>
+                <ul class="link-list">
+                    <li><a href="{% url 'about' %}">About Us</a></li>
+                    <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                    <li><a href="{% url 'privacy' %}">Privacy Policy</a></li>
+                    <li><a href="{% url 'terms' %}">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="copyright">© <span id="current-year"></span> InterviewAI. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- <script>
+    // Make session data available to JavaScript
+    window.sessionsData = {{ sessions|safe }};
+    const scores = window.sessionsData || [];
+
+    const scoresList = document.getElementById('scoresList');
+if (scoresList) {
+    scoresList.innerHTML = '';
+    scores.forEach(s => {
+        const div = document.createElement('div');
+        div.className = 'score-item';
+        div.innerHTML = `
+            <div class="score-info">
+                <div class="score-type">${s.type}</div>
+                <div class="score-meta">${s.date}</div>
+            </div>
+            <div class="score-result">
+                <div class="score-value">${s.score}%</div>
+                <div class="score-grade ${getGradeClass(s.grade)}">${s.grade}</div>
+            </div>
+        `;
+        scoresList.appendChild(div);
+    });
+}
+</script> -->
+
+<script src="{% static 'C:\Users\HP\Desktop\MockupFinalProject\static\profile\profile.js' %}"></script>
+</body>
+</html>
+
+
+
+

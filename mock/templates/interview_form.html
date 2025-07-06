@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mock Interview Setup</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'interview_form/interview_form.css' %}" />
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <i class="fas fa-comments icon-header"></i>
+            <h2>Mock Interview Setup</h2>
+            <p class="subtitle">Customize your mock interview experience</p>
+        </div>
+        
+        <form id="interviewForm" method="POST" action="{% url 'interview_form' %}">
+            {% csrf_token %}
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="jobRole"><i class="fas fa-briefcase"></i> Job Role/Position</label>
+                    <input type="text" id="jobRole" name="jobRole" placeholder="e.g., Software Engineer" required>
+                </div>
+                <div class="form-group">
+                    <label for="industry"><i class="fas fa-building"></i> Industry</label>
+                    <div class="select-wrapper">
+                        <select id="industry" name="industry" required>
+                            <option value="">Select Industry</option>
+                            <option value="Tech">Information Technology</option>
+                            <option value="Finance">Finance</option>
+                            <option value="Healthcare">Healthcare</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="experienceLevel"><i class="fas fa-star"></i> Experience Level</label>
+                    <div class="select-wrapper">
+                        <select id="experienceLevel" name="experienceLevel" required>
+                            <option value="">Select Experience Level</option>
+                            <option value="Entry-Level">Entry-Level</option>
+                            <option value="Mid-Level">Mid-Level</option>
+                            <option value="Senior">Senior</option>
+                        </select>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="interviewType"><i class="fas fa-users"></i> Interview Type</label>
+                    <div class="select-wrapper">
+                        <select id="interviewType" name="interviewType" required>
+                            <option value="">Select Interview Type</option>
+                            <option value="Technical">Technical</option>
+                            <option value="Behavioral">Behavioral</option>
+                            <option value="Case Study">Case Study</option>
+                            <option value="Panel">Panel</option>
+                            <option value="Group">Group</option>
+                        </select>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+                <div class="form-group full-width">
+                    <label for="specificSkills"><i class="fas fa-tools"></i> Specific topic for giving interview</label>
+                    <input type="text" id="specificSkills" name="specificSkills" placeholder="e.g., Python coding, SQL queries">
+                </div>
+                <div class="form-group">
+                    <label for="companyName"><i class="fas fa-building"></i> Company Name (Optional)</label>
+                    <input type="text" id="companyName" name="companyName" placeholder="e.g., Google, Amazon">
+                </div>
+                <div class="form-group">
+                    <label for="difficultyLevel"><i class="fas fa-chart-line"></i> Difficulty Level</label>
+                    <div class="select-wrapper">
+                        <select id="difficultyLevel" name="difficultyLevel">
+                            <option value="">Select Difficulty</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Intermediate">Intermediate</option>
+                            <option value="Advanced">Advanced</option>
+                        </select>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+                <div class="form-group full-width">
+                    <label for="resume"><i class="fas fa-file-alt"></i> Resume/CV Upload (Optional)</label>
+                    <div class="file-input-wrapper">
+                        <input type="file" id="resume" name="resume">
+                        <label for="resume" class="file-input-label"><i class="fas fa-upload"></i> <span id="file-name">Choose file</span></label>
+                    </div>
+                </div>
+                <div class="form-group full-width">
+                    <label for="additionalNotes"><i class="fas fa-sticky-note"></i> Additional Notes</label>
+                    <textarea id="additionalNotes" name="additionalNotes" rows="4" placeholder="e.g., Stress interview, situational questions"></textarea>
+                </div>
+                <div class="btn-container">
+                    <a href="{% url 'landing' %}" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back to Home</a>
+                    <button type="submit" class="btn submit-btn"><i class="fas fa-paper-plane"></i> Submit</button>
+                </div>
+            </div>
+        </form>
+        
+        <!-- Preview can be removed or kept as a optional feature -->
+        <div id="preview" class="preview" style="display: none;">
+            <div class="preview-header">
+                <i class="fas fa-eye"></i>
+                <h3>Preview of Your Mock Interview Setup</h3>
+            </div>
+            <div id="previewContent"></div>
+        </div>
+    </div>
+    
+    <script src="{% static 'interview_form/interview_form.js' %}"></script>
+</body>
+</html>

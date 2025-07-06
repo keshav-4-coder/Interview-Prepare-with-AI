@@ -1,0 +1,514 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - InterviewAI</title>
+    <meta name="description" content="Learn about InterviewAI's mission, story, team, and how we're helping job seekers ace their interviews with AI-powered practice.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'about/about.css' %}">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+    <link rel="icon" href="{% static 'images/logo.svg' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="{% url 'landing' %}" class="logo">
+                <img src="{% static 'images/logo.svg' %}" alt="InterviewAI">
+            </a>
+            <div class="desktop-nav">
+                <div class="nav_contents">
+                    <a href="{% url 'landing' %}" class="nav-link {% if request.resolver_match.url_name == 'landing' %}active{% endif %}">Home</a>
+                    <a href="{% url 'guide' %}" class="nav-link {% if request.resolver_match.url_name == 'guide' %}active{% endif %}">How it Works</a>
+                    <a href="{% url 'faq' %}" class="nav-link {% if request.resolver_match.url_name == 'faq' %}active{% endif %}">FAQ</a>
+                    <a href="{% url 'about' %}" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About Us</a>
+                    <a href="{% url 'contact' %}" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a>
+                </div>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'profile' %}" class="btn btn-outline">Profile</a>
+                    <a href="{% url 'logout' %}" class="btn btn-primary">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-outline {% if request.resolver_match.url_name == 'login' %}active{% endif %}">Log in</a>
+                    <a href="{% url 'signup' %}" class="btn btn-primary {% if request.resolver_match.url_name == 'signup' %}active{% endif %}">Sign up</a>
+                {% endif %}
+            </div>
+            <button class="mobile-menu-btn" aria-label="Toggle menu" aria-expanded="false">
+                <span class="menu-icon"></span>
+            </button>
+        </div>
+        <div class="mobile-nav">
+            <a href="{% url 'landing' %}" class="nav-link {% if request.resolver_match.url_name == 'landing' %}active{% endif %}">Home</a>
+            <a href="{% url 'guide' %}" class="nav-link {% if request.resolver_match.url_name == 'guide' %}active{% endif %}">How it Works</a>
+            <a href="{% url 'faq' %}" class="nav-link {% if request.resolver_match.url_name == 'faq' %}active{% endif %}">FAQ</a>
+            <a href="{% url 'about' %}" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About Us</a>
+            <a href="{% url 'contact' %}" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a>
+            <div class="mobile-buttons">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'profile' %}" class="btn btn-outline">Profile</a>
+                    <a href="{% url 'logout' %}" class="btn btn-primary">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-outline {% if request.resolver_match.url_name == 'login' %}active{% endif %}">Log in</a>
+                    <a href="{% url 'signup' %}" class="btn btn-primary {% if request.resolver_match.url_name == 'signup' %}active{% endif %}">Sign up</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    <main>
+        <section class="hero-section about-hero" data-animate>
+            <div class="container">
+                <h1 class="hero-title">About InterviewAI</h1>
+                <p class="hero-description">
+                    We're on a mission to help job seekers ace their interviews and land their dream jobs through AI-powered practice and personalized feedback.
+                </p>
+            </div>
+        </section>
+
+        <section class="story-section" data-animate>
+            <div class="container">
+                <div class="story-container">
+                    <div class="story-content">
+                        <h2 class="section-title">Our Story</h2>
+                        <p class="story-text">
+                            Welcome to our Mock Interview Website, a platform designed to help users ace their job interviews with confidence. This project was created as part of our first-year university assignment by a team of four passionate students: Kishan Chaudhary, Anil Bohara, Keshav Thapa, and Aashiash Shrestha. 
+                        </p>
+                        <p class="story-text">
+                            Our mission is to deliver a user-friendly tool for practicing mock interviews, providing realistic scenarios and constructive feedback to enhance interview skills. Kishan and Anil, our skilled backend developers, built a robust system to ensure seamless functionality and smooth performance. Meanwhile, Keshav and Aashiash, our talented frontend developers, crafted an intuitive and engaging user interface to elevate the overall experience.
+                        </p>
+                        <p class="story-text">
+                            Together, we blended our expertise in technology and teamwork to create a platform that not only meets our academic goals but also empowers users in their career journeys. Thank you for visiting our website—we’re excited to support you in nailing your next interview!
+                        </p>
+                       
+                    </div>
+                    <div class="story-image">
+                        <img src="{% static 'images/group_discussion.jpg' %}" alt="Team discussing interview strategies" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mission-section" data-animate>
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Our Mission</h2>
+                    <p class="section-description">
+                        To empower every job seeker with accessible, high-quality interview preparation that builds confidence and skills.
+                    </p>
+                </div>
+                <div class="values-grid">
+                    <div class="value-card" data-category="general">
+                        <div class="value-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                        </div>
+                        <h3 class="value-title">Accessibility</h3>
+                        <p class="value-description">
+                            High-quality interview prep for everyone, regardless of background or resources.
+                        </p>
+                    </div>
+                    <div class="value-card" data-category="features">
+                        <div class="value-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                            </svg>
+                        </div>
+                        <h3 class="value-title">Innovation</h3>
+                        <p class="value-description">
+                            Pushing AI boundaries for realistic, impactful interview practice.
+                        </p>
+                    </div>
+                    <div class="value-card" data-category="pricing">
+                        <div class="value-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                            </svg>
+                        </div>
+                        <h3 class="value-title">Empowerment</h3>
+                        <p class="value-description">
+                            Building skills and confidence for career success.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="team-section" data-animate>
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-label">Meet Our Team</h2>
+                    <h2 class="section-title">Team Sutradhar</h2>
+                    <h3 class="section-title">The People Behind InterviewAI</h3>
+                    <p class="section-description">
+                        A diverse team of AI experts, career coaches, and product builders dedicated to your success.
+                    </p>
+                </div>
+                <div class="team-grid">
+                    <div class="team-member" data-category="technical">
+                        <div class="team-photo">
+                            <img src="{% static 'images/keshav.png' %}" alt="Keshav Thapa" loading="lazy">
+                        </div>
+                        <h3 class="team-name">Keshav Thapa</h3>
+                        <p class="team-role">Frontend Developer</p>
+                        <p class="team-bio">
+                            Bachelor student and researcher with over 2 years in machine learning, driving InterviewAI's user experience.
+                        </p>
+                        <div class="social-links team-social">
+                            <a href="https://www.linkedin.com/in/keshav-thapa/" class="social-link" aria-label="LinkedIn">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path>
+                                    <circle cx="4" cy="4" r="2"></circle>
+                                </svg>
+                            </a>
+                            <a href="https://github.com/keshav414-coder" class="social-link" aria-label="GitHub">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.5 2.87 8.32 6.84 9.67.5.1.68-.22.68-.5v-1.7c-2.78.6-3.37-1.35-3.37-1.35-.46-1.2-1.12-1.5-1.12-1.5-.92-.65.07-.64.07-.64 1.02.07 1.55 1.07 1.55 1.07.9 1.56 2.36 1.1 2.94.84.1-.67.36-1.1.65-1.35-2.22-.26-4.56-1.13-4.56-5 0-1.1.38-2 1-2.7-.1-.26-.44-1.3.1-2.7 0 0 .84-.27 2.75 1.02A9.38 9.38 0 0112 6.8c.85 0 1.7.12 2.5.34 1.9-1.29 2.74-1.02 2.74-1.02.55 1.4.22 2.44.1 2.7.63.7 1 1.6 1 2.7 0 3.88-2.35 4.72-4.6 4.97.38.34.7 1 .7 2v2.96c0 .28.18.6.7.5A10 10 0 0022 12.26C22 6.58 17.52 2 12 2z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="team-member" data-category="technical">
+                        <div class="team-photo">
+                            <img src="{% static 'images/kisan.png' %}" alt="Kishan Chaudhary" loading="lazy">
+                        </div>
+                        <h3 class="team-name">Kishan Chaudhary</h3>
+                        <p class="team-role">Backend Supporter</p>
+                        <p class="team-bio">
+                            College student specializing in AI systems, ensuring robust backend functionality.
+                        </p>
+                        <div class="social-links team-social">
+                            <a href="https://www.linkedin.com/in/kishan-c-ab8450326/" class="social-link" aria-label="LinkedIn">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path>
+                                    <circle cx="4" cy="4" r="2"></circle>
+                                </svg>
+                            </a>
+                            <a href="https://github.com/KISHANCHAUDHARY24" class="social-link" aria-label="GitHub">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.5 2.87 8.32 6.84 9.67.5.1.68-.22.68-.5v-1.7c-2.78.6-3.37-1.35-3.37-1.35-.46-1.2-1.12-1.5-1.12-1.5-.92-.65.07-.64.07-.64 1.02.07 1.55 1.07 1.55 1.07.9 1.56 2.36 1.1 2.94.84.1-.67.36-1.1.65-1.35-2.22-.26-4.56-1.13-4.56-5 0-1.1.38-2 1-2.7-.1-.26-.44-1.3.1-2.7 0 0 .84-.27 2.75 1.02A9.38 9.38 0 0112 6.8c.85 0 1.7.12 2.5.34 1.9-1.29 2.74-1.02 2.74-1.02.55 1.4.22 2.44.1 2.7.63.7 1 1.6 1 2.7 0 3.88-2.35 4.72-4.6 4.97.38.34.7 1 .7 2v2.96c0 .28.18.6.7.5A10 10 0 0022 12.26C22 6.58 17.52 2 12 2z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="team-member" data-category="features">
+                        <div class="team-photo">
+                            <img src="{% static 'images/ashish.png' %}" alt="Aashish Shrestha" loading="lazy">
+                        </div>
+                        <h3 class="team-name">Aashish Shrestha</h3>
+                        <p class="team-role">Frontend Supporter</p>
+                        <p class="team-bio">
+                            Creative student and intern, crafting intuitive and engaging interfaces.
+                        </p>
+                        <div class="social-links team-social">
+                            <a href="https://www.linkedin.com/in/shrestha-aashish/" class="social-link" aria-label="LinkedIn">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path>
+                                    <circle cx="4" cy="4" r="2"></circle>
+                                </svg>
+                            </a>
+                            <a href="https://github.com/Aashish-35" class="social-link" aria-label="GitHub">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.5 2.87 8.32 6.84 9.67.5.1.68-.22.68-.5v-1.7c-2.78.6-3.37-1.35-3.37-1.35-.46-1.2-1.12-1.5-1.12-1.5-.92-.65.07-.64.07-.64 1.02.07 1.55 1.07 1.55 1.07.9 1.56 2.36 1.1 2.94.84.1-.67.36-1.1.65-1.35-2.22-.26-4.56-1.13-4.56-5 0-1.1.38-2 1-2.7-.1-.26-.44-1.3.1-2.7 0 0 .84-.27 2.75 1.02A9.38 9.38 0 0112 6.8c.85 0 1.7.12 2.5.34 1.9-1.29 2.74-1.02 2.74-1.02.55 1.4.22 2.44.1 2.7.63.7 1 1.6 1 2.7 0 3.88-2.35 4.72-4.6 4.97.38.34.7 1 .7 2v2.96c0 .28.18.6.7.5A10 10 0 0022 12.26C22 6.58 17.52 2 12 2z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="team-member" data-category="general">
+                        <div class="team-photo">
+                            <img src="{% static 'images/anil.png' %}" alt="Anil Bohara" loading="lazy">
+                        </div>
+                        <h3 class="team-name">Anil Bohara</h3>
+                        <p class="team-role">Backend Developer</p>
+                        <p class="team-bio">
+                            Student and tech professional, building scalable backend systems for InterviewAI.
+                        </p>
+                        <div class="social-links team-social">
+                            <a href="https://www.linkedin.com/in/anilbohara/" class="social-link" aria-label="LinkedIn">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path>
+                                    <circle cx="4" cy="4" r="2"></circle>
+                                </svg>
+                            </a>
+                            <a href="https://github.com/anilbohara" class="social-link" aria-label="GitHub">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.5 2.87 8.32 6.84 9.67.5.1.68-.22.68-.5v-1.7c-2.78.6-3.37-1.35-3.37-1.35-.46-1.2-1.12-1.5-1.12-1.5-.92-.65.07-.64.07-.64 1.02.07 1.55 1.07 1.55 1.07.9 1.56 2.36 1.1 2.94.84.1-.67.36-1.1.65-1.35-2.22-.26-4.56-1.13-4.56-5 0-1.1.38-2 1-2.7-.1-.26-.44-1.3.1-2.7 0 0 .84-.27 2.75 1.02A9.38 9.38 0 0112 6.8c.85 0 1.7.12 2.5.34 1.9-1.29 2.74-1.02 2.74-1.02.55 1.4.22 2.44.1 2.7.63.7 1 1.6 1 2.7 0 3.88-2.35 4.72-4.6 4.97.38.34.7 1 .7 2v2.96c0 .28.18.6.7.5A10 10 0 0022 12.26C22 6.58 17.52 2 12 2z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats-section" data-animate>
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Our Impact</h2>
+                    <p class="section-description">
+                        See how InterviewAI is transforming the job interview landscape globally.
+                    </p>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat" data-category="general">
+                        <p class="stat-number" data-count="50000">0</p>
+                        <p class="stat-label">Users Worldwide</p>
+                    </div>
+                    <div class="stat" data-category="features">
+                        <p class="stat-number" data-count="500000">0</p>
+                        <p class="stat-label">Practice Interviews</p>
+                    </div>
+                    <div class="stat" data-category="pricing">
+                        <p class="stat-number" data-count="85">0</p>
+                        <p class="stat-label">Success Rate</p>
+                    </div>
+                    <div class="stat" data-category="technical">
+                        <p class="stat-number" data-count="30">0</p>
+                        <p class="stat-label">Industry Categories</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="project-section" data-animate>
+            <div class="container">
+                <div class="project-content">
+                    <h1 class="section-title">About Us – Team Sutradhar</h1>
+                    <div class="accordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">Who Are We?</h2>
+                            <div class="accordion-content">
+                                <p class="project-text">
+                                    We are <strong>Team Sutradhar</strong>, a group of passionate innovators committed to simplifying the recruitment process using Artificial Intelligence. Our goal is to bridge the gap between job seekers and recruiters with smart, efficient, and unbiased interview solutions.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">Project Title: InterviewAI</h2>
+                            <div class="accordion-content">
+                                <h3 class="section-subheading">What Is InterviewAI?</h3>
+                                <p class="project-text">
+                                    <strong>InterviewAI</strong> is an intelligent platform designed to automate and enhance the hiring process. It conducts AI-driven interviews, evaluates candidates using machine learning models, and provides structured feedback to recruiters.
+                                </p>
+                              
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">Project Introduction</h2>
+                            <div class="accordion-content">
+                                <p class="project-text">
+                                    Our Mock Interview Website is a dynamic platform crafted to empower users to excel in job interviews through realistic practice. Developed as a first-year university project by Kishan Chaudhary and Anil Bohara (backend developers) and Keshav Thapa and Aashiash Shrestha (frontend developers), it offers a seamless and engaging experience. The robust backend ensures smooth functionality, while the intuitive frontend delivers interactive mock interviews and instant feedback. Our goal is to boost users’ confidence and skills for their career journeys. This project showcases our team’s passion for technology and commitment to creating a valuable tool for interview preparation.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">GitHub Repository</h2>
+                            <div class="accordion-content">
+                                <p class="project-text">
+                                    Explore our code and development progress: <a href="https://github.com/keshav414-coder/innovationProject--another-copy-" target="_blank" class="project-link">GitHub Link</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">Project Logo</h2>
+                            <div class="accordion-content">
+                                <img src="{% static 'images/logo.svg' %}" alt="InterviewAI Logo" width="150" class="project-image" loading="lazy">
+                                <p class="project-text">
+                                    Our logo symbolizes the connection between talent and opportunity—automated, intelligent, and streamlined.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">Project Demo Video</h2>
+                            <div class="accordion-content">
+                                <p class="project-text">
+                                    Watch a walkthrough of our platform: <a href="#" target="_blank" class="project-link">InterviewAI Demo Video</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">UN Sustainable Development Goals</h2>
+                            <div class="accordion-content">
+                                <ul class="project-list">
+                                    <li>Goal 8: Decent Work and Economic Growth</li>
+                                    <li>Goal 9: Industry, Innovation, and Infrastructure</li>
+                                    <li>Goal 10: Reduced Inequalities</li>
+                                </ul>
+                                <h3 class="section-subheading">Why These Goals?</h3>
+                                <p class="project-text">
+                                    We aim to create fairer hiring practices (Goal 10), promote access to quality jobs (Goal 8), and use cutting-edge AI technology to improve infrastructure in HR (Goal 9).
+                                </p>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">Problem people face</h2>
+                            <div class="accordion-content">
+                                <p class="project-text">
+                                     <ul class="project-list">
+                                    <li>Lack of realistic interview practice</li>
+                                    <li>Interview anxiety and low confidence</li>
+                                    <li>Insufficient feedback for improvement</li>
+                                    <li>Costly, inaccessible coaching resources</li>
+                                    <li>Unstructured, inconsistent preparation</li>
+                                </ul>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">Proposed Solution</h2>
+                            <div class="accordion-content">
+                                <ul class="project-list">
+                                    <li>Provides realistic mock interview practiceP</li>
+                                    <li>Reduces nervousness and builds confidence</li>
+                                    <li>Offers instant, constructive feedback</li>
+                                    <li>Makes preparation accessible and affordable</li>
+                                    <li>Ensures structured, systematic practice</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- <div class="accordion-item">
+                            <h2 class="accordion-header">Use Case</h2>
+                            <div class="accordion-content">
+                                <p class="project-text">
+                                    The platform supports HR teams and hiring managers by enabling intelligent, bias-free interviews and improving the recruitment experience for all users.
+                                </p>
+                            </div>
+                        </div> -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">Technologies & Tools Used</h2>
+                            <div class="accordion-content">
+                                <ul class="project-list">
+                                    <li><strong>Frontend:</strong> JavaScript, HTML, CSS</li>
+                                    <li><strong>Backend:</strong> Python (Django)</li>
+                                    <li><strong>Database:</strong> dbsqlite3</li>
+                                    <li><strong>Design Tools:</strong> Figma</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">Prototype Description</h2>
+                            <div class="accordion-content">
+                                <ul class="project-list">
+                                    <li>Clean, intuitive UI with navigation (home, practice, feedback, about)e</li>
+                                    <li>Functional mock interview module with selectable specific topic</li>
+                                    <li>Small backend database of predefined interview questions</li>
+                                    <li>Automated feedback system for user responses</li>
+                                    <li>Responsive design for mobile and desktop compatibility</li>
+                                    <li>Secure user authentication and session management</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- <div class="accordion-item">
+                            <h2 class="accordion-header">Prototype Images</h2>
+                            <div class="accordion-content">
+                                <p class="project-text">Design and wireframes of the initial product (Insert images or image gallery here).</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">Market Impact</h2>
+                            <div class="accordion-content">
+                                <p class="project-text">
+                                    Based on market research, our product fills a critical gap in automated and unbiased hiring. InterviewAI offers a competitive edge with AI-first design and accessible solutions.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">Development Process</h2>
+                            <div class="accordion-content">
+                                <ol class="project-list ordered">
+                                    <li>Ideation and research</li>
+                                    <li>Prototyping with design tools</li>
+                                    <li>Model training and testing</li>
+                                    <li>Integration and deployment</li>
+                                </ol>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">Final Product Images</h2>
+                            <div class="accordion-content">
+                                <p class="project-text">Showcasing our completed platform (Insert final product screenshots here).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </section>
+
+        <section class="cta-section" data-animate>
+            <div class="container">
+                <h2 class="cta-title">Join the InterviewAI Community</h2>
+                <p class="cta-description">
+                    Transform your interview skills with AI-driven practice. Start free today!
+                </p>
+                <div class="cta-buttons">
+                    <a href="{% url 'signup' %}" class="btn btn-primary">Get Started Free</a>
+                    <a href="{% url 'contact' %}" class="btn btn-primary">Contact Us</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="{% url 'landing' %}" class="logo">
+                        <img src="{% static 'images/logo.svg' %}" alt="InterviewAI" class="footer-logo">
+                    </a>
+                    <p class="brand-description">
+                        InterviewAI uses advanced AI to prepare you for job interviews with realistic mock interviews and personalized feedback.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Facebook">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Twitter">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="LinkedIn">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zM17.5 6.5h.01"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3 class="footer-title">Resources</h3>
+                    <ul class="link-list">
+                        <li><a href="{% url 'guide' %}">How it Works</a></li>
+                        <li><a href="{% url 'pricing' %}">Pricing</a></li>
+                        <li><a href="{% url 'faq' %}">FAQ</a></li>
+                        <li><a href="{% url 'blog' %}">Blog</a></li>
+                        <li><a href="{% url 'testimonials' %}">Testimonials</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3 class="footer-title">Company</h3>
+                    <ul class="link-list">
+                        <li><a href="{% url 'about' %}">About Us</a></li>
+                        <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                        <li><a href="{% url 'privacy' %}">Privacy Policy</a></li>
+                        <li><a href="{% url 'terms' %}">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="copyright">© <span id="current-year"></span> InterviewAI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="{% static 'about/about.js' %}"></script>
+</body>
+</html>

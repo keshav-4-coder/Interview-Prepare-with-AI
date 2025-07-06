@@ -1,0 +1,359 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Feedback - InterviewAI</title>
+    <meta name="description" content="Review your mock interview performance with personalized feedback from InterviewAI.">
+    <meta name="author" content="InterviewAI">
+    <meta property="og:title" content="Interview Feedback - InterviewAI">
+    <meta property="og:description" content="Review your mock interview performance with personalized feedback from InterviewAI.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="{% static 'images/og-image.png' %}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@interviewai">
+    <meta name="twitter:image" content="{% static 'images/twitter-image.png' %}">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'feedback/feedback.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link rel="icon" href="{% static 'images/logo.svg' %}">
+    <style>
+        .radar-chart, .bar-chart {
+            max-width: 3000px !important;
+            max-height: 3000px !important;
+        }
+        .try-another-interview {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        .try-another-button {
+            background-color: #007bff;
+            color: white;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, transform 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .try-another-button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        .try-another-button svg {
+            width: 20px;
+            height: 20px;
+        }
+        .interview-types-dropdown {
+            display: none;
+            position: absolute;
+            bottom: 64px;
+            right: 0;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            min-width: 220px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .interview-types-dropdown.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .interview-type-option {
+            margin-bottom: 10px;
+        }
+        .interview-type-option:last-child {
+            margin-bottom: 0;
+        }
+        .interview-type-option a {
+            display: block;
+            padding: 12px;
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            border-radius: 5px;
+            text-align: center;
+            transition: opacity 0.3s;
+        }
+        .interview-type-option a:hover {
+            opacity: 0.9;
+        }
+        .technical { background-color: #28a745; } /* Green */
+        .behavioral { background-color: #007bff; } /* Blue */
+        .case-study { background-color: #ffc107; } /* Yellow */
+        .panel { background-color: #17a2b8; } /* Cyan */
+        .group { background-color: #dc3545; } /* Red */
+        @media (max-width: 768px) {
+            .try-another-interview {
+                position: static;
+                margin: 20px auto;
+                text-align: center;
+            }
+            .interview-types-dropdown {
+                position: static;
+                max-width: 100%;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+   <nav class="navbar">
+        <div class="container">
+            <a href="{% url 'landing' %}" class="logo">
+                <img src="{% static 'images/logo.svg' %}" alt="InterviewAI">
+            </a>
+            <div class="desktop-nav">
+                <div class="nav_contents">
+                    <a href="{% url 'landing' %}" class="nav-link {% if request.resolver_match.url_name == 'landing' %}active{% endif %}">Home</a>
+                    <a href="{% url 'guide' %}" class="nav-link {% if request.resolver_match.url_name == 'guide' %}active{% endif %}">How it Works</a>
+                    <a href="{% url 'faq' %}" class="nav-link {% if request.resolver_match.url_name == 'faq' %}active{% endif %}">FAQ</a>
+                    <a href="{% url 'about' %}" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About Us</a>
+                    <a href="{% url 'contact' %}" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a>
+                </div>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'profile' %}" class="btn btn-outline">Profile</a>
+                    <a href="{% url 'logout' %}" class="btn btn-primary">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-outline {% if request.resolver_match.url_name == 'login' %}active{% endif %}">Log in</a>
+                    <a href="{% url 'signup' %}" class="btn btn-primary {% if request.resolver_match.url_name == 'signup' %}active{% endif %}">Sign up</a>
+                {% endif %}
+            </div>
+            <button class="mobile-menu-btn" aria-label="Toggle menu" aria-expanded="false">
+                <span class="menu-icon"></span>
+            </button>
+        </div>
+        <div class="mobile-nav">
+            <a href="{% url 'landing' %}" class="nav-link {% if request.resolver_match.url_name == 'landing' %}active{% endif %}">Home</a>
+            <a href="{% url 'guide' %}" class="nav-link {% if request.resolver_match.url_name == 'guide' %}active{% endif %}">How it Works</a>
+            <a href="{% url 'faq' %}" class="nav-link {% if request.resolver_match.url_name == 'faq' %}active{% endif %}">FAQ</a>
+            <a href="{% url 'about' %}" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About Us</a>
+            <a href="{% url 'contact' %}" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a>
+            <div class="mobile-buttons">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'profile' %}" class="btn btn-outline">Profile</a>
+                    <a href="{% url 'logout' %}" class="btn btn-primary">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-outline {% if request.resolver_match.url_name == 'login' %}active{% endif %}">Log in</a>
+                    <a href="{% url 'signup' %}" class="btn btn-primary {% if request.resolver_match.url_name == 'signup' %}active{% endif %}">Sign up</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>  
+
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h1>Your Interview Feedback</h1>
+                <div class="buttons">
+                    <a href="{% url 'interview_form' %}" class="btn btn-primary">New Interview</a>
+                    <button class="btn btn-outline" id="save-profile">Save to Profile</button>
+                    <button class="btn btn-outline" id="download-feedback">Download PDF</button>
+                </div>
+            </div>
+
+            <div class="tabs">
+                <button class="tab active" onclick="showTab('overview')">Overview</button>
+                <button class="tab" onclick="showTab('question-details')">Question Details</button>
+            </div>
+
+            <div id="overview" class="content">
+                <div class="overall-performance">
+                    <div class="performance-item">
+                        <div class="score-circle">
+                            <svg viewBox="0 0 36 36" class="score-circle-svg" role="img" aria-label="Overall score">
+                                <path class="score-circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                <path class="score-circle-fill" id="score-circle-fill" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                <text x="18" y="20.35" class="score-text" id="score-text">0%</text>
+                            </svg>
+                        </div>
+                        <p>Overall Score</p>
+                        <button class="btn btn-outline toggle-breakdown" aria-expanded="false" aria-controls="performance-breakdown">View Details</button>
+                        <div class="performance-breakdown" id="performance-breakdown">
+                            <h3>Performance Breakdown</h3>
+                            <ul class="breakdown-list">
+                                <li><span>Clarity:</span> <span id="clarity-score">0/10</span></li>
+                                <li><span>Relevance:</span> <span id="relevance-score">0/10</span></li>
+                                <li><span>Confidence:</span> <span id="confidence-score">0/10</span></li>
+                                <li><span>Conciseness:</span> <span id="conciseness-score">0/10</span></li>
+                                <li><span>Problem-Solving:</span> <span id="problem-solving-score">0/10</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="performance-item">
+                        <canvas id="radarChart" class="radar-chart"></canvas>
+                        <div id="radarChartError" class="chart-error" style="display: none;">
+                            Failed to load the performance chart.
+                        </div>
+                    </div>
+                </div>
+                <div class="performance-summary">
+                    <h2>Performance Summary</h2>
+                    <h3>Key Strengths</h3>
+                    <ul id="strengths-list"></ul>
+                    <h3>Areas for Improvement</h3>
+                    <ul id="improvements-list"></ul>
+                    <h3>Overall Feedback</h3>
+                    <p id="overall-feedback">Loading feedback...</p>
+                </div>
+            </div>
+
+            <div id="question-details" class="content" style="display: none;">
+                <div class="question-details-container">
+                    <div class="question-summary">
+                        <div class="performance-item">
+                            <div class="score-circle">
+                                <svg viewBox="0 0 36 36" class="score-circle-svg" role="img" aria-label="Average question score">
+                                    <path class="score-circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                    <path class="score-circle-fill" id="avg-score-circle-fill" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                    <text x="18" y="20.35" class="score-text" id="avg-score-text">0%</text>
+                                </svg>
+                            </div>
+                            <p>Average Question Score</p>
+                        </div>
+                        <div class="performance-item">
+                            <canvas id="barChart" class="bar-chart"></canvas>
+                            <div id="barChartError" class="chart-error" style="display: none;">
+                                Failed to load the bar chart.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="question-details-list">
+                        <h2>Question Breakdown</h2>
+                        <div id="question-breakdown"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="try-another-interview">
+                <button class="try-another-button" onclick="toggleDropdown()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 5v14m7-7H5"></path>
+                    </svg>
+                    Try Another Interview Type
+                </button>
+                <div class="interview-types-dropdown" id="interview-types-dropdown">
+                    <div class="interview-type-option">
+                        <a href="{% url 'interview_form' %}?interviewType=Technical" class="technical">Technical Interview</a>
+                    </div>
+                    <div class="interview-type-option">
+                        <a href="{% url 'interview_form' %}?interviewType=Behavioral" class="behavioral">Behavioral Interview</a>
+                    </div>
+                    <div class="interview-type-option">
+                        <a href="{% url 'interview_form' %}?interviewType=Case Study" class="case-study">Case Study Interview</a>
+                    </div>
+                    <div class="interview-type-option">
+                        <a href="{% url 'interview_form' %}?interviewType=Panel" class="panel">Panel Interview</a>
+                    </div>
+                    <div class="interview-type-option">
+                        <a href="{% url 'interview_form' %}?interviewType=Group" class="group">Group Interview</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="{% url 'landing' %}" class="logo">
+                        <img src="{% static 'images/logo.svg' %}" alt="InterviewAI" class="footer-logo">
+                    </a>
+                    <p class="brand-description">
+                        InterviewAI uses advanced AI to prepare you for job interviews with realistic mock interviews and personalized feedback.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Facebook">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Twitter">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="LinkedIn">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zM17.5 6.5h.01"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3 class="footer-title">Resources</h3>
+                    <ul class="link-list">
+                        <li><a href="{% url 'guide' %}">How it Works</a></li>
+                        <li><a href="{% url 'pricing' %}">Pricing</a></li>
+                        <li><a href="{% url 'faq' %}">FAQ</a></li>
+                        <li><a href="{% url 'blog' %}">Blog</a></li>
+                        <li><a href="{% url 'testimonials' %}">Testimonials</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3 class="footer-title">Company</h3>
+                    <ul class="link-list">
+                        <li><a href="{% url 'about' %}">About Us</a></li>
+                        <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                        <li><a href="{% url 'privacy' %}">Privacy Policy</a></li>
+                        <li><a href="{% url 'terms' %}">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="copyright">© <span id="current-year"></span> InterviewAI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <button class="back-to-top" aria-label="Back to top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+            <path d="M12 19V5m7 7l-7-7-7 7"></path>
+        </svg>
+    </button>
+
+    <script>
+        // Pass the feedback data to JavaScript
+        const feedbackData = `{{ feedback|escapejs }}`;
+
+        // Toggle dropdown visibility
+        function toggleDropdown() {
+            const dropdown = document.getElementById('interview-types-dropdown');
+            dropdown.classList.toggle('active');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function (event) {
+            const dropdown = document.getElementById('interview-types-dropdown');
+            const button = document.querySelector('.try-another-button');
+            if (!dropdown.contains(event.target) && !button.contains(event.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+    </script>
+    <script src="{% static 'feedback/feedbakc.js' %}"></script>
+</body>
+</html>

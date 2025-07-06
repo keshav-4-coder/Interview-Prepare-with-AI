@@ -1,0 +1,258 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - InterviewAI{% block title %}
+    {% endblock %}       </title>
+
+    <meta name="description" content="Learn how InterviewAI protects your personal data and respects your privacy through our comprehensive privacy policy.">
+    <meta name="author" content="InterviewAI">
+    <meta property="og:title" content="Privacy Policy - InterviewAI">
+    <meta property="og:description" content="Learn how InterviewAI protects your personal data and respects your privacy through our comprehensive privacy policy.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="images/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@interviewai">
+    <meta name="twitter:image" content="images/twitter-image.png">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'C:\Users\HP\Desktop\MockupFinalProject\static\privacy\privacy.css' %}">
+    <link rel="icon" href="{% static 'images/logo.svg' %}">
+</head>
+<body>
+   <nav class="navbar">
+        <div class="container">
+            <a href="{% url 'landing' %}" class="logo">
+                <img src="{% static 'images/logo.svg' %}" alt="InterviewAI">
+            </a>
+            <div class="desktop-nav">
+                <div class="nav_contents">
+                    <a href="{% url 'landing' %}" class="nav-link {% if request.resolver_match.url_name == 'landing' %}active{% endif %}">Home</a>
+                    <a href="{% url 'guide' %}" class="nav-link {% if request.resolver_match.url_name == 'guide' %}active{% endif %}">How it Works</a>
+                    <a href="{% url 'faq' %}" class="nav-link {% if request.resolver_match.url_name == 'faq' %}active{% endif %}">FAQ</a>
+                    <a href="{% url 'about' %}" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About Us</a>
+                    <a href="{% url 'contact' %}" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a>
+                </div>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'profile' %}" class="btn btn-outline">Profile</a>
+                    <a href="{% url 'logout' %}" class="btn btn-primary">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-outline {% if request.resolver_match.url_name == 'login' %}active{% endif %}">Log in</a>
+                    <a href="{% url 'signup' %}" class="btn btn-primary {% if request.resolver_match.url_name == 'signup' %}active{% endif %}">Sign up</a>
+                {% endif %}
+            </div>
+            <button class="mobile-menu-btn" aria-label="Toggle menu" aria-expanded="false">
+                <span class="menu-icon"></span>
+            </button>
+        </div>
+        <div class="mobile-nav">
+            <a href="{% url 'landing' %}" class="nav-link {% if request.resolver_match.url_name == 'landing' %}active{% endif %}">Home</a>
+            <a href="{% url 'guide' %}" class="nav-link {% if request.resolver_match.url_name == 'guide' %}active{% endif %}">How it Works</a>
+            <a href="{% url 'faq' %}" class="nav-link {% if request.resolver_match.url_name == 'faq' %}active{% endif %}">FAQ</a>
+            <a href="{% url 'about' %}" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About Us</a>
+            <a href="{% url 'contact' %}" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a>
+            <div class="mobile-buttons">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'profile' %}" class="btn btn-outline">Profile</a>
+                    <a href="{% url 'logout' %}" class="btn btn-primary">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-outline {% if request.resolver_match.url_name == 'login' %}active{% endif %}">Log in</a>
+                    <a href="{% url 'signup' %}" class="btn btn-primary {% if request.resolver_match.url_name == 'signup' %}active{% endif %}">Sign up</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="page-section">
+            <div class="container">
+                <div class="page-header text-center">
+                    <h1 class="section-label">Privacy Policy</h1>
+                    <p class="page-description">
+                        Last updated: May 15, 2025
+                    </p>
+                </div>
+                <div class="policy-container">
+                    <div class="policy-content">
+                        <section class="policy-section" id="introduction">
+                            <h2>Introduction</h2>
+                            <p>
+                                At InterviewAI, we are committed to safeguarding your privacy. This privacy policy outlines how we collect, use, and protect your personal data when you visit our website or use our services, ensuring transparency and compliance with data protection laws.
+                            </p>
+                            <p>
+                                This policy applies to all users of InterviewAI’s platform, including those who sign up for accounts, subscribe to premium services, or participate in mock interviews.
+                            </p>
+                        </section>
+
+                        <section class="policy-section" id="information-we-collect">
+                            <h2>Information We Collect</h2>
+                            <p>We gather various types of data to provide and improve our services, including:</p>
+                            <ul>
+                                <li>
+                                    <strong>Personal Identifiers:</strong> Name, email address, login credentials, and billing information for premium subscriptions.
+                                </li>
+                                <li>
+                                    <strong>Profile Information:</strong> Professional background, job interests, and interview preferences provided during account setup.
+                                </li>
+                                <li>
+                                    <strong>Interview Data:</strong> Questions, responses, and content generated during mock interviews.
+                                </li>
+                                <li>
+                                    <strong>Usage Data:</strong> Interactions with our website, such as features used and session duration.
+                                </li>
+                                <li>
+                                    <strong>Device Information:</strong> IP address, browser type, operating system, and other technical details from your device.
+                                </li>
+                            </ul>
+                        </section>
+
+                        <section class="policy-section" id="how-we-use-information">
+                            <h2>How We Use Your Information</h2>
+                            <p>We use your data to:</p>
+                            <ul>
+                                <li>Deliver and enhance our AI-powered interview preparation services.</li>
+                                <li>Process subscriptions and payments securely.</li>
+                                <li>Personalize interview questions and feedback.</li>
+                                <li>Analyze usage to optimize platform performance.</li>
+                                <li>Send updates, promotions, and service-related communications.</li>
+                                <li>Ensure platform security and integrity.</li>
+                                <li>Meet legal and regulatory requirements.</li>
+                            </ul>
+                        </section>
+
+                        <section class="policy-section" id="data-security">
+                            <h2>Data Security</h2>
+                            <p>
+                                We employ robust technical and organizational measures to protect your data from unauthorized access, loss, or alteration. Data is stored on secure servers, and payment transactions are encrypted with SSL technology.
+                            </p>
+                            <p>
+                                While we take every precaution, no internet transmission is entirely secure. We strive to protect your data, but cannot guarantee absolute security during transmission.
+                            </p>
+                        </section>
+
+                        <section class="policy-section" id="data-retention">
+                            <h2>Data Retention</h2>
+                            <p>
+                                We retain your personal data only as long as necessary to fulfill the purposes outlined in this policy, including legal, accounting, or reporting obligations.
+                            </p>
+                            <p>
+                                Retention periods are determined based on data sensitivity, purpose, and legal requirements. You may request data deletion under certain conditions (see "Your Rights").
+                            </p>
+                        </section>
+
+                        <section class="policy-section" id="your-rights">
+                            <h2>Your Rights</h2>
+                            <p>Under data protection laws, you have rights to:</p>
+                            <ul>
+                                <li>Access your personal data.</li>
+                                <li>Correct inaccurate data.</li>
+                                <li>Request data erasure.</li>
+                                <li>Object to or restrict data processing.</li>
+                                <li>Transfer your data to another service.</li>
+                                <li>Withdraw consent where applicable.</li>
+                            </ul>
+                            <p>
+                                To exercise these rights, contact us at <a href="mailto:privacy@interviewai.com">privacy@interviewai.com</a>. No fee is typically required, but we may charge for unfounded or excessive requests.
+                            </p>
+                        </section>
+
+                        <section class="policy-section" id="third-party-services">
+                            <h2>Third-Party Services</h2>
+                            <p>
+                                Our platform may link to third-party websites or services. These third parties have their own privacy policies, and we are not responsible for their practices. We recommend reviewing their policies before interacting.
+                            </p>
+                        </section>
+
+                        <section class="policy-section" id="cookies">
+                            <h2>Cookies and Tracking Technologies</h2>
+                            <p>
+                                We use cookies and similar technologies to enhance your experience and analyze usage. You can manage cookie preferences through your browser settings.
+                            </p>
+                            <p>Cookies we use include:</p>
+                            <ul>
+                                <li><strong>Essential Cookies:</strong> Necessary for website functionality.</li>
+                                <li><strong>Analytical Cookies:</strong> Track visitor counts and navigation patterns.</li>
+                                <li><strong>Functionality Cookies:</strong> Personalize content based on your preferences.</li>
+                                <li><strong>Targeting Cookies:</strong> Monitor your visits and link clicks for marketing purposes.</li>
+                            </ul>
+                        </section>
+
+                        <section class="policy-section" id="changes">
+                            <h2>Changes to This Privacy Policy</h2>
+                            <p>
+                                We may update this policy periodically. Changes will be posted here with an updated "Last updated" date. We encourage regular review to stay informed.
+                            </p>
+
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+   <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="{% url 'landing' %}" class="logo">
+                        <img src="{% static 'images/logo.svg' %}" alt="InterviewAI" class="footer-logo">
+                    </a>
+                    <p class="brand-description">
+                        InterviewAI uses advanced AI to prepare you for job interviews with realistic mock interviews and personalized feedback.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Facebook">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Twitter">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="LinkedIn">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zM17.5 6.5h.01"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3 class="footer-title">Resources</h3>
+                    <ul class="link-list">
+                        <li><a href="{% url 'guide' %}">How it Works</a></li>
+                        <li><a href="{% url 'pricing' %}">Pricing</a></li>
+                        <li><a href="{% url 'faq' %}">FAQ</a></li>
+                        <li><a href="{% url 'blog' %}">Blog</a></li>
+                        <li><a href="{% url 'testimonials' %}">Testimonials</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3 class="footer-title">Company</h3>
+                    <ul class="link-list">
+                        <li><a href="{% url 'about' %}">About Us</a></li>
+                        <li><a href=" {% url 'contact' %}">Contact Us</a></li>
+                        <li><a href="{% url 'privacy' %}">Privacy Policy</a></li>
+                        <li><a href="{% url 'terms' %}">Terms of Service</a></li>
+                    </ul>
+                </div>
+            <div class="footer-bottom">
+                <p class="copyright">© <span id="current-year"></span> InterviewAI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'C:\Users\HP\Desktop\MockupFinalProject\static\privacy\privacy.js' %}"></script>
+</body>
+</html>

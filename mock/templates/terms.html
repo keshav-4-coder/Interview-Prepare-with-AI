@@ -1,0 +1,204 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service - InterviewAI {% block title %}
+    {% endblock %}       </title>
+
+    <meta name="description" content="Review the Terms of Service for using InterviewAI’s AI-powered interview preparation platform.">
+    <meta name="author" content="InterviewAI">
+    <meta property="og:title" content="Terms of Service - InterviewAI">
+    <meta property="og:description" content="Review the Terms of Service for using InterviewAI’s AI-powered interview preparation platform.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="images/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@interviewai">
+    <meta name="twitter:image" content="images/twitter-image.png">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'C:\Users\HP\Desktop\MockupFinalProject\static\terms\terms.css' %}">
+    <link rel="icon" href="{% static 'images/logo.svg' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="{% url 'landing' %}" class="logo">
+                <img src="{% static 'images/logo.svg' %}" alt="InterviewAI">
+            </a>
+            <div class="desktop-nav">
+                <div class="nav_contents">
+                    <a href="{% url 'landing' %}" class="nav-link {% if request.resolver_match.url_name == 'landing' %}active{% endif %}">Home</a>
+                    <a href="{% url 'guide' %}" class="nav-link {% if request.resolver_match.url_name == 'guide' %}active{% endif %}">How it Works</a>
+                    <a href="{% url 'faq' %}" class="nav-link {% if request.resolver_match.url_name == 'faq' %}active{% endif %}">FAQ</a>
+                    <a href="{% url 'about' %}" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About Us</a>
+                    <a href="{% url 'contact' %}" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a>
+                </div>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'profile' %}" class="btn btn-outline">Profile</a>
+                    <a href="{% url 'logout' %}" class="btn btn-primary">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-outline {% if request.resolver_match.url_name == 'login' %}active{% endif %}">Log in</a>
+                    <a href="{% url 'signup' %}" class="btn btn-primary {% if request.resolver_match.url_name == 'signup' %}active{% endif %}">Sign up</a>
+                {% endif %}
+            </div>
+            <button class="mobile-menu-btn" aria-label="Toggle menu" aria-expanded="false">
+                <span class="menu-icon"></span>
+            </button>
+        </div>
+        <div class="mobile-nav">
+            <a href="{% url 'landing' %}" class="nav-link {% if request.resolver_match.url_name == 'landing' %}active{% endif %}">Home</a>
+            <a href="{% url 'guide' %}" class="nav-link {% if request.resolver_match.url_name == 'guide' %}active{% endif %}">How it Works</a>
+            <a href="{% url 'faq' %}" class="nav-link {% if request.resolver_match.url_name == 'faq' %}active{% endif %}">FAQ</a>
+            <a href="{% url 'about' %}" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About Us</a>
+            <a href="{% url 'contact' %}" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a>
+            <div class="mobile-buttons">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'profile' %}" class="btn btn-outline">Profile</a>
+                    <a href="{% url 'logout' %}" class="btn btn-primary">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-outline {% if request.resolver_match.url_name == 'login' %}active{% endif %}">Log in</a>
+                    <a href="{% url 'signup' %}" class="btn btn-primary {% if request.resolver_match.url_name == 'signup' %}active{% endif %}">Sign up</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="terms-section">
+            <div class="container">
+                <div class="section-header text-center">
+                    <h1 class="section-label">Terms of Service</h1>
+                    <p class="section-description">
+                        Last updated: May 15, 2025
+                    </p>
+                </div>
+                <div class="terms-container">
+            
+                    <div class="terms-content">
+                        <section id="acceptance">
+                            <h2>1. Acceptance of Terms</h2>
+                            <p>
+                                By accessing or using InterviewAI’s platform, you agree to be bound by these Terms of Service. If you do not agree with any part of these terms, you must not use our services.
+                            </p>
+                        </section>
+
+                        <section id="use-of-services">
+                            <h2>2. Use of Services</h2>
+                            <p>
+                                InterviewAI is designed for personal, non-commercial use to assist with job interview preparation. You agree not to misuse the platform, including but not limited to attempting unauthorized access, disrupting functionality, or violating any applicable laws or regulations.
+                            </p>
+                        </section>
+
+                        <section id="account-responsibilities">
+                            <h2>3. Account Responsibilities</h2>
+                            <p>
+                                You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account. Please notify us immediately at <a href="mailto:support@interviewai.com">support@interviewai.com</a> if you suspect any unauthorized use of your account.
+                            </p>
+                        </section>
+
+                        <section id="intellectual-property">
+                            <h2>4. Intellectual Property</h2>
+                            <p>
+                                All content on the InterviewAI platform, including text, graphics, software, and AI-generated materials, is the property of InterviewAI or its licensors and is protected by intellectual property laws. You may not reproduce, distribute, or modify any content without prior written permission from InterviewAI.
+                            </p>
+                        </section>
+
+                        <section id="termination">
+                            <h2>5. Termination</h2>
+                            <p>
+                                InterviewAI reserves the right to suspend or terminate your account at our sole discretion, with or without notice, for reasons including but not limited to violations of these terms, misuse of the platform, or compliance with legal requirements.
+                            </p>
+                        </section>
+
+                        <section id="limitation-of-liability">
+                            <h2>6. Limitation of Liability</h2>
+                            <p>
+                                InterviewAI is provided on an “as is” and “as available” basis without warranties of any kind. We shall not be liable for any direct, indirect, incidental, or consequential damages arising from your use of the platform or inability to access it.
+                            </p>
+                        </section>
+
+                        <section id="changes">
+                            <h2>7. Changes to Terms</h2>
+                            <p>
+                                We may update these Terms of Service from time to time. Any changes will be posted on this page, and your continued use of InterviewAI after such changes constitutes your acceptance of the revised terms. Please review this page periodically for updates.
+                            </p>
+                        </section>
+
+                        <section id="contact">
+                            <h2>8. Contact Us</h2>
+                            <p>
+                                If you have any questions or concerns about these Terms of Service, please contact us via <a href="contact.html">our contact page</a> orshould I continue by emailing <a href="mailto:support@interviewai.com">support@interviewai.com</a>.
+                            </p>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+   <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="{% url 'landing' %}" class="logo">
+                        <img src="{% static 'images/logo.svg' %}" alt="InterviewAI" class="footer-logo">
+                    </a>
+                    <p class="brand-description">
+                        InterviewAI uses advanced AI to prepare you for job interviews with realistic mock interviews and personalized feedback.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Facebook">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Twitter">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="LinkedIn">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zM17.5 6.5h.01"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3 class="footer-title">Resources</h3>
+                    <ul class="link-list">
+                        <li><a href="{% url 'guide' %}">How it Works</a></li>
+                        <li><a href="{% url 'pricing' %}">Pricing</a></li>
+                        <li><a href="{% url 'faq' %}">FAQ</a></li>
+                        <li><a href="{% url 'blog' %}">Blog</a></li>
+                        <li><a href="{% url 'testimonials' %}">Testimonials</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3 class="footer-title">Company</h3>
+                    <ul class="link-list">
+                        <li><a href="{% url 'about' %}">About Us</a></li>
+                        <li><a href=" {% url 'contact' %}">Contact Us</a></li>
+                        <li><a href="{% url 'privacy' %}">Privacy Policy</a></li>
+                        <li><a href="{% url 'terms' %}">Terms of Service</a></li>
+                    </ul>
+                </div>
+            <div class="footer-bottom">
+                <p class="copyright">© <span id="current-year"></span> InterviewAI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'C:\Users\HP\Desktop\MockupFinalProject\static\terms\terms.js' %}"></script>
+</body>
+</html>

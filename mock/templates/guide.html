@@ -1,0 +1,546 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How It Works - InterviewAI {% block title %}
+    {% endblock %}   </title>
+    <meta name="description" content="Learn how InterviewAI helps you prepare for job interviews with AI-powered mock interviews, personalized feedback, and performance analytics.">
+    <meta name="author" content="InterviewAI">
+    <meta property="og:title" content="How It Works - InterviewAI">
+    <meta property="og:description" content="Learn how InterviewAI helps you prepare for job interviews with AI-powered mock interviews, personalized feedback, and performance analytics.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="images/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@interviewai">
+    <meta name="twitter:image" content="images/twitter-image.png">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'C:\Users\HP\Desktop\MockupFinalProject\static\guide\guide.css' %}">
+    <link rel="icon" href="{% static 'images/logo.svg' %}">
+</head>
+<body>
+    <nav class="navbar">
+    <div class="container">
+        <a href="{% url 'landing' %}" class="logo">
+            <img src="{% static 'images/logo.svg' %}" alt="InterviewAI">
+        </a>
+        <div class="desktop-nav">
+            <div class="nav_contents">
+                <a href="{% url 'landing' %}" class="nav-link {% if request.resolver_match.url_name == 'landing' %}active{% endif %}">Home</a>
+                <a href="{% url 'guide' %}" class="nav-link {% if request.resolver_match.url_name == 'guide' %}active{% endif %}">How it Works</a>
+                <a href="{% url 'faq' %}" class="nav-link {% if request.resolver_match.url_name == 'faq' %}active{% endif %}">FAQ</a>
+                <a href="{% url 'about' %}" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About Us</a>
+                <a href="{% url 'contact' %}" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a>
+            </div>
+            {% if user.is_authenticated %}
+                <a href="{% url 'profile' %}" class="btn btn-outline">Profile</a>
+                <a href="{% url 'logout' %}" class="btn btn-primary">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn btn-outline {% if request.resolver_match.url_name == 'login' %}active{% endif %}">Log in</a>
+                <a href="{% url 'signup' %}" class="btn btn-primary {% if request.resolver_match.url_name == 'signup' %}active{% endif %}">Sign up</a>
+            {% endif %}
+        </div>
+        <button class="mobile-menu-btn" aria-label="Toggle menu" aria-expanded="false">
+            <span class="menu-icon"></span>
+        </button>
+    </div>
+    <div class="mobile-nav">
+        <a href="{% url 'landing' %}" class="nav-link {% if request.resolver_match.url_name == 'landing' %}active{% endif %}">Home</a>
+        <a href="{% url 'guide' %}" class="nav-link {% if request.resolver_match.url_name == 'guide' %}active{% endif %}">How it Works</a>
+        <a href="{% url 'faq' %}" class="nav-link {% if request.resolver_match.url_name == 'faq' %}active{% endif %}">FAQ</a>
+        <a href="{% url 'about' %}" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About Us</a>
+        <a href="{% url 'contact' %}" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a>
+        <div class="mobile-buttons">
+            {% if user.is_authenticated %}
+                <a href="{% url 'profile' %}" class="btn btn-outline">Profile</a>
+                <a href="{% url 'logout' %}" class="btn btn-primary">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn btn-outline {% if request.resolver_match.url_name == 'login' %}active{% endif %}">Log in</a>
+                <a href="{% url 'signup' %}" class="btn btn-primary {% if request.resolver_match.url_name == 'signup' %}active{% endif %}">Sign up</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
+    <main>
+        <section class="guide-hero-section">
+            <div class="container">
+                <div class="guide-header">
+                    <h1 class="guide-title">How to Use InterviewAI</h1>
+                    <p class="guide-description">
+                        Master your interview skills with our AI-powered platform. Follow these steps to get started and maximize your preparation.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <nav class="tab-nav" role="tablist">
+            <button class="tab-button active" role="tab" aria-selected="true" aria-controls="getting-started-panel" id="getting-started-tab">Getting Started</button>
+            <button class="tab-button" role="tab" aria-selected="false" aria-controls="interview-process-panel" id="interview-process-tab">Interview Process</button>
+            <button class="tab-button" role="tab" aria-selected="false" aria-controls="understanding-feedback-panel" id="understanding-feedback-tab">Feedback</button>
+            <button class="tab-button" role="tab" aria-selected="false" aria-controls="interview-tips-panel" id="interview-tips-tab">Interview Tips</button>
+        </nav>
+
+        <div class="tab-content-container">
+            <section id="getting-started-panel" class="guide-section tab-panel active" role="tabpanel" aria-labelledby="getting-started-tab">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section-title">Getting Started with InterviewAI</h2>
+                        <p class="section-description">Begin your interview preparation journey in just a few steps.</p>
+                    </div>
+                    <div class="guide-content">
+                        <div class="guide-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3>Create Your Account</h3>
+                                <p>Sign up to unlock personalized interview practice tailored to your career goals.</p>
+                                <ul class="step-list">
+                                    <li><a href="signup.html" class="text-link">Sign up</a> with your email</li>
+                                    <li>Verify your email address</li>
+                                    <li>Add your industry, role, and experience level</li>
+                                    <li>Customize your interview preferences</li>
+                                </ul>
+                                <div class="step-image">
+                                    <img src="{% static 'images/create-account.jpg' %}" alt="Creating an account on InterviewAI" loading="lazy">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="guide-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h3>Explore Interview Types</h3>
+                                <p>Choose from a variety of interview types tailored to your industry and role.</p>
+                                <ul class="step-list">
+                                    <li><strong>Software Engineering:</strong> Coding, algorithms, system design</li>
+                                    <li><strong>Product Management:</strong> Strategy, product development</li>
+                                    <li><strong>Marketing:</strong> Campaigns, analytics, branding</li>
+                                    <li><strong>General:</strong> Behavioral and situational questions</li>
+                                </ul>
+                                
+                            </div>
+                        </div>
+                        <div class="guide-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h3>Select Difficulty Level</h3>
+                                <p>Match the interview difficulty to your experience level.</p>
+                                <div class="difficulty-cards">
+                                    <div class="difficulty-card">
+                                        <h4>Beginner</h4>
+                                        <p>Foundational questions for those with &lt;1 year experience.</p>
+                                    </div>
+                                    <div class="difficulty-card">
+                                        <h4>Intermediate</h4>
+                                        <p>Complex scenarios for 1-5 years of experience.</p>
+                                    </div>
+                                    <div class="difficulty-card">
+                                        <h4>Advanced</h4>
+                                        <p>Leadership and technical challenges for 5+ years.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="guide-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h3>Customize Your Interview</h3>
+                                <p>Tailor your practice to focus on specific skills or topics.</p>
+                                <ul class="step-list">
+                                    <li>Choose question count and topics</li>
+                                    <li>Set response time limits</li>
+                                    <li>Upload resume for targeted questions</li>
+                                </ul>
+                                <div class="step-image">
+                                    <img src="{% static 'images/customize-interview.jpg' %}" alt="Customizing interview settings" loading="lazy">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="interview-process-panel" class="guide-section tab-panel" role="tabpanel" aria-labelledby="interview-process-tab">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section-title">The Interview Process</h2>
+                        <p class="section-description">Understand how our AI-powered interviews work and excel in practice.</p>
+                    </div>
+                    <div class="guide-content">
+                        <div class="guide-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3>Starting Your Interview</h3>
+                                <p>Prepare for a realistic interview experience with these steps.</p>
+                                <ul class="step-list">
+                                    <li>Click "Start Interview" to begin</li>
+                                    <li>Find a quiet, distraction-free space</li>
+                                    <li>Use headphones for optimal audio</li>
+                                    <li>Enable camera for realism (optional)</li>
+                                </ul>
+                                <div class="tip-box">
+                                    <h4>Pro Tip</h4>
+                                    <p>Dress professionally to boost confidence.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="guide-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h3>During the Interview</h3>
+                                <p>Engage with the AI interviewer as you would in a real interview.</p>
+                                <ul class="step-list">
+                                    <li>Questions presented via text or audio</li>
+                                    <li>Respond by typing or speaking</li>
+                                    <li>Expect follow-up questions based on answers</li>
+                                    <li>Take time to think before responding</li>
+                                </ul>
+                              
+                            </div>
+                        </div>
+                        <div class="guide-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h3>Technical Questions & Coding</h3>
+                                <p>Tackle technical challenges with integrated tools.</p>
+                                <ul class="step-list">
+                                    <li>Use the built-in code editor</li>
+                                    <li>Receive AI evaluation of code</li>
+                                    <li>Request hints if needed</li>
+                                    <li>Sketch solutions with whiteboard feature</li>
+                                </ul>
+                                <div class="tip-box">
+                                    <h4>Pro Tip</h4>
+                                    <p>Verbalize your thought process while coding.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="guide-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h3>Completing the Interview</h3>
+                                <p>Wrap up your session and prepare for feedback.</p>
+                                <ul class="step-list">
+                                    <li>AI thanks you and ends the session</li>
+                                    <li>Review your responses</li>
+                                    <li>Retry specific questions if desired</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="understanding-feedback-panel" class="guide-section tab-panel" role="tabpanel" aria-labelledby="understanding-feedback-tab">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section-title">Understanding Your Feedback</h2>
+                        <p class="section-description">Leverage personalized feedback to improve your skills.</p>
+                    </div>
+                    <div class="guide-content">
+                        <div class="guide-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3>Feedback Overview</h3>
+                                <p>Get a comprehensive review of your performance.</p>
+                                <ul class="step-list">
+                                    <li>Overall score and key metrics</li>
+                                    <li>Strengths and improvement areas</li>
+                                    <li>Question-by-question analysis</li>
+                                    <li>Industry benchmark comparisons</li>
+                                </ul>
+                        
+                            </div>
+                        </div>
+                        <div class="guide-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h3>Response Analysis</h3>
+                                <p>Understand the quality of your answers across multiple dimensions.</p>
+                                <ul class="step-list">
+                                    <li><strong>Content:</strong> Accuracy and relevance</li>
+                                    <li><strong>Communication:</strong> Clarity and structure</li>
+                                    <li><strong>Technical:</strong> Correctness for technical questions</li>
+                                    <li><strong>Behavioral:</strong> Competency demonstration</li>
+                                </ul>
+                                <div class="feedback-example">
+                                    <h4>Example Feedback</h4>
+                                    <p><strong>Question:</strong> "Tell me about a time you dealt with a difficult team member."</p>
+                                    <p><strong>Content:</strong> Good situation description; add outcome details.</p>
+                                    <p><strong>Communication:</strong> Clear STAR method usage.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="guide-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h3>Improvement Suggestions</h3>
+                                <p>Receive actionable advice to enhance your responses.</p>
+                                <ul class="step-list">
+                                    <li>Alternative answer approaches</li>
+                                    <li>Best-practice sample responses</li>
+                                    <li>Communication improvement techniques</li>
+                                    <li>Learning resources for key topics</li>
+                                </ul>
+                                <div class="tip-box">
+                                    <h4>Pro Tip</h4>
+                                    <p>Focus on 1-2 improvement areas per session.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="guide-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h3>Progress Tracking</h3>
+                                <p>Monitor your improvement over time.</p>
+                                <ul class="step-list">
+                                    <li>Track performance trends</li>
+                                    <li>Analyze skill improvement</li>
+                                    <li>Identify consistent strengths/weaknesses</li>
+                                    <li>Set practice goals</li>
+                                </ul>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="interview-tips-panel" class="guide-section tab-panel" role="tabpanel" aria-labelledby="interview-tips-tab">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section-title">Interview Tips & Best Practices</h2>
+                        <p class="section-description">Expert advice to ace your real interviews.</p>
+                    </div>
+                    <div class="guide-content">
+                        <div class="tips-grid">
+                            <div class="tip-card">
+                                <div class="tip-icon">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path>
+                                    </svg>
+                                </div>
+                                <h3>Preparation</h3>
+                                <ul>
+                                    <li>Research the company</li>
+                                    <li>Review job requirements</li>
+                                    <li>Prepare relevant examples</li>
+                                    <li>Practice 3-5 times with InterviewAI</li>
+                                </ul>
+                            </div>
+                            <div class="tip-card">
+                                <div class="tip-icon">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <path d="M12 6v6l4 2"></path>
+                                    </svg>
+                                </div>
+                                <h3>During the Interview</h3>
+                                <ul>
+                                    <li>Arrive early</li>
+                                    <li>Maintain eye contact</li>
+                                    <li>Use STAR method</li>
+                                    <li>Ask thoughtful questions</li>
+                                </ul>
+                            </div>
+                            <div class="tip-card">
+                                <div class="tip-icon">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
+                                    </svg>
+                                </div>
+                                <h3>Communication</h3>
+                                <ul>
+                                    <li>Speak clearly</li>
+                                    <li>Avoid filler words</li>
+                                    <li>Structure answers</li>
+                                    <li>Show enthusiasm</li>
+                                </ul>
+                            </div>
+                            <div class="tip-card">
+                                <div class="tip-icon">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                    </svg>
+                                </div>
+                                <h3>Technical Interviews</h3>
+                                <ul>
+                                    <li>Think aloud</li>
+                                    <li>Clarify questions</li>
+                                    <li>Handle edge cases</li>
+                                    <li>Explain concepts simply</li>
+                                </ul>
+                            </div>
+                            <div class="tip-card">
+                                <div class="tip-icon">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <path d="M16 16s-1.5-2-4-2-4 2-4 2"></path>
+                                        <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                                        <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                                    </svg>
+                                </div>
+                                <h3>Managing Nervousness</h3>
+                                <ul>
+                                    <li>Practice deep breathing</li>
+                                    <li>Prepare thoroughly</li>
+                                    <li>Use positive self-talk</li>
+                                    <li>Practice with InterviewAI</li>
+                                </ul>
+                            </div>
+                            <div class="tip-card">
+                                <div class="tip-icon">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
+                                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                    </svg>
+                                </div>
+                                <h3>Follow-Up</h3>
+                                <ul>
+                                    <li>Send thank-you email</li>
+                                    <li>Mention conversation points</li>
+                                    <li>Reaffirm interest</li>
+                                    <li>Keep message concise</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <section class="faq-teaser">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Frequently Asked Questions</h2>
+                    <p class="section-description">Find answers to common questions about InterviewAI.</p>
+                </div>
+                <div class="faq-preview">
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false">
+                            Is InterviewAI free to use?
+                            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <p>InterviewAI offers a free tier with basic features and a premium subscription for advanced tools like unlimited interviews and detailed analytics.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false">
+                            How accurate is the AI interviewer?
+                            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Trained on thousands of real interviews, our AI provides feedback comparable to human interviewers, continuously improving with user data.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false">
+                            Can I use InterviewAI on mobile?
+                            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Yes, InterviewAI is fully responsive across desktop, tablet, and mobile, though desktop is recommended for coding challenges.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="view-all-faq">
+                    <a href="{% url 'faq' %}" class="btn btn-outline-primary">View All FAQs</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="container">
+                <h2 class="cta-title">Ready to Ace Your Interview?</h2>
+                <p class="cta-description">Start practicing with InterviewAI and boost your confidence today.</p>
+                <div class="cta-buttons">
+                    <a href="{% url 'interview_form' %}" class="btn btn-primary">Start Interview</a>
+                    <a href="{% url 'signup' %}" class="btn btn-primary">Create Account</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="{% url 'landing' %}" class="logo">
+                        <img src="{% static 'images/logo.svg' %}" alt="InterviewAI" class="footer-logo">
+                    </a>
+                    <p class="brand-description">
+                        InterviewAI uses advanced AI to prepare you for job interviews with realistic mock interviews and personalized feedback.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Facebook">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Twitter">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="LinkedIn">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zM17.5 6.5h.01"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3 class="footer-title">Resources</h3>
+                    <ul class="link-list">
+                        <li><a href="{% url 'guide' %}">How it Works</a></li>
+                        <li><a href="{% url 'pricing' %}">Pricing</a></li>
+                        <li><a href="{% url 'faq' %}">FAQ</a></li>
+                        <li><a href="{% url 'blog' %}">Blog</a></li>
+                        <li><a href="{% url 'testimonials' %}">Testimonials</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3 class="footer-title">Company</h3>
+                    <ul class="link-list">
+                        <li><a href="{% url 'about' %}">About Us</a></li>
+                        <li><a href=" {% url 'contact' %}">Contact Us</a></li>
+                        <li><a href="{% url 'privacy' %}">Privacy Policy</a></li>
+                        <li><a href="{% url 'terms' %}">Terms of Service</a></li>
+                    </ul>
+                </div>
+            <div class="footer-bottom">
+                <p class="copyright">© <span id="current-year"></span> InterviewAI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal" id="video-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="close-modal" aria-label="Close modal">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+
+        </div>
+    </div>
+    <script src="{% static 'C:\Users\HP\Desktop\MockupFinalProject\static\guide\guide.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,466 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - InterviewAI {% block title %}
+    {% endblock %}   </title>
+
+    <meta name="description" content="Find answers to common questions about InterviewAI's AI-powered interview preparation platform.">
+    <meta name="author" content="InterviewAI">
+    <meta property="og:title" content="FAQ - InterviewAI">
+    <meta property="og:description" content="Find answers to common questions about InterviewAI's AI-powered interview preparation platform.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="images/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@interviewai">
+    <meta name="twitter:image" content="images/twitter-image.png">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'C:\Users\HP\Desktop\MockupFinalProject\static\faq\faq.css' %}">
+    <link rel="icon" href="{% static 'images/logo.svg' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="{% url 'landing' %}" class="logo">
+                <img src="{% static 'images/logo.svg' %}" alt="InterviewAI">
+            </a>
+            <div class="desktop-nav">
+                <div class="nav_contents">
+                    <a href="{% url 'landing' %}" class="nav-link {% if request.resolver_match.url_name == 'landing' %}active{% endif %}">Home</a>
+                    <a href="{% url 'guide' %}" class="nav-link {% if request.resolver_match.url_name == 'guide' %}active{% endif %}">How it Works</a>
+                    <a href="{% url 'faq' %}" class="nav-link {% if request.resolver_match.url_name == 'faq' %}active{% endif %}">FAQ</a>
+                    <a href="{% url 'about' %}" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About Us</a>
+                    <a href="{% url 'contact' %}" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a>
+                </div>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'profile' %}" class="btn btn-outline">Profile</a>
+                    <a href="{% url 'logout' %}" class="btn btn-primary">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-outline {% if request.resolver_match.url_name == 'login' %}active{% endif %}">Log in</a>
+                    <a href="{% url 'signup' %}" class="btn btn-primary {% if request.resolver_match.url_name == 'signup' %}active{% endif %}">Sign up</a>
+                {% endif %}
+            </div>
+            <button class="mobile-menu-btn" aria-label="Toggle menu" aria-expanded="false">
+                <span class="menu-icon"></span>
+            </button>
+        </div>
+        <div class="mobile-nav">
+            <a href="{% url 'landing' %}" class="nav-link {% if request.resolver_match.url_name == 'landing' %}active{% endif %}">Home</a>
+            <a href="{% url 'guide' %}" class="nav-link {% if request.resolver_match.url_name == 'guide' %}active{% endif %}">How it Works</a>
+            <a href="{% url 'faq' %}" class="nav-link {% if request.resolver_match.url_name == 'faq' %}active{% endif %}">FAQ</a>
+            <a href="{% url 'about' %}" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About Us</a>
+            <a href="{% url 'contact' %}" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a>
+            <div class="mobile-buttons">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'profile' %}" class="btn btn-outline">Profile</a>
+                    <a href="{% url 'logout' %}" class="btn btn-primary">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-outline {% if request.resolver_match.url_name == 'login' %}active{% endif %}">Log in</a>
+                    <a href="{% url 'signup' %}" class="btn btn-primary {% if request.resolver_match.url_name == 'signup' %}active{% endif %}">Sign up</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>  
+    <main>
+        <section class="page-section">
+            <div class="container">
+                <div class="page-header text-center">
+                    <h1 class="page-title">Frequently Asked Questions</h1>
+                    <p class="page-description">
+                        Explore answers to common questions about InterviewAI's AI-powered interview preparation.
+                    </p>
+                </div>
+                <div class="faq-filter">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="general">General</button>
+                    <button class="filter-btn" data-filter="features">Features</button>
+                    <button class="filter-btn" data-filter="pricing">Pricing</button>
+                    <button class="filter-btn" data-filter="technical">Technical</button>
+                    <button class="filter-btn" data-filter="privacy">Privacy</button>
+                </div>
+                <div class="faq-container">
+                    <div class="accordion">
+                        <!-- General -->
+                        <div class="accordion-item" data-category="general">
+                            <button class="accordion-header" aria-expanded="false">
+                                <span class="category-badge general">General</span>
+                                <span>What is InterviewAI?</span>
+                                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="accordion-content">
+                                <p>InterviewAI is an AI-powered platform that prepares job seekers for interviews with realistic mock interviews, industry-specific questions, and personalized feedback.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item" data-category="general">
+                            <button class="accordion-header" aria-expanded="false">
+                                <span class="category-badge general">General</span>
+                                <span>Who can benefit from InterviewAI?</span>
+                                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="accordion-content">
+                                <p>Job seekers at all levels, from entry-level to senior professionals, across industries like tech, finance, and marketing can benefit from our tailored practice.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item" data-category="general">
+                            <button class="accordion-header" aria-expanded="false">
+                                <span class="category-badge general">General</span>
+                                <span>How does InterviewAI differ from traditional prep?</span>
+                                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="accordion-content">
+                                <p>Unlike books or static guides, InterviewAI offers dynamic, AI-driven mock interviews with real-time feedback, simulating actual interview scenarios.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item" data-category="general">
+                            <button class="accordion-header" aria-expanded="false">
+                                <span class="category-badge general">General</span>
+                                <span>Is InterviewAI suitable for career changers?</span>
+                                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="accordion-content">
+                                <p>Yes, our platform provides tailored questions and feedback to help career changers address transferable skills and industry-specific challenges.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item" data-category="general">
+                            <button class="accordion-header" aria-expanded="false">
+                                <span class="category-badge general">General</span>
+                                <span>How quickly can I start practicing?</span>
+                                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="accordion-content">
+                                <p>Sign up and start practicing immediately with our free tier or premium plans—no lengthy setup required.</p>
+                            </div>
+                        </div>
+                        <!-- Features -->
+                        <div class="accordion-item" data-category="features">
+                            <button class="accordion-header" aria-expanded="false">
+                                <span class="category-badge features">Features</span>
+                                <span>How does the AI interview work?</span>
+                                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="accordion-content">
+                                <p>Our AI asks role-specific questions. Respond via text or voice, and get feedback on content, delivery, and language.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item" data-category="features">
+                            <button class="accordion-header" aria-expanded="false">
+                                <span class="category-badge features">Features</span>
+                                <span>What interview types can I practice?</span>
+                                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="accordion-content">
+                                <p>Practice software engineering, product management, marketing, sales, finance, or general behavioral interviews for all experience levels.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item" data-category="features">
+                            <button class="accordion-header" aria-expanded="false">
+                                <span class="category-badge features">Features</span>
+                                <span>Can I prepare for company-specific interviews?</span>
+                                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="accordion-content">
+                                <p>Premium users access company-specific modules for top employers in tech, finance, and more, based on research.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item" data-category="features">
+                            <button class="accordion-header" aria-expanded="false">
+                                <span class="category-badge features">Features</span>
+                                <span>Does InterviewAI offer performance tracking?</span>
+                                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="accordion-content">
+                                <p>Yes, our analytics dashboard tracks your progress, highlighting strengths and areas for improvement over time.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item" data-category="features">
+                            <button class="accordion-header" aria-expanded="false">
+                                <span class="category-badge features">Features</span>
+                                <span>Can I customize my practice sessions?</span>
+                                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="accordion-content">
+                                <p>Premium users can select question types, difficulty levels, and session lengths to tailor practice sessions.</p>
+                            </div>
+                        </div>
+                        <!-- Pricing -->
+                        <div class="accordion-item" data-category="pricing">
+                            <button class="accordion-header" aria-expanded="false">
+                                <span class="category-badge pricing">Pricing</span>
+                                <span>Is InterviewAI free to use?</span>
+                                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="accordion-content">
+                                <p>Our free tier offers limited interviews. Premium plans unlock unlimited access and advanced features. See <a href="pricing.html" class="text-primary">pricing</a>.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item" data-category="pricing">
+                            <button class="accordion-header" aria-expanded="false">
+                                <span class="category-badge pricing">Pricing</span>
+                                <span>Can I get a refund?</span>
+                                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="accordion-content">
+                                <p>Yes, we offer a 14-day money-back guarantee for all paid plans if you’re not satisfied.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item" data-category="pricing">
+                            <button class="accordion-header" aria-expanded="false">
+                                <span class="category-badge pricing">Pricing</span>
+                                <span>Are there annual subscription discounts?</span>
+                                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="accordion-content">
+                                <p>Yes, annual subscriptions offer savings compared to monthly plans. Check our <a href="pricing.html" class="text-primary">pricing page</a> for details.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item" data-category="pricing">
+                            <button class="accordion-header" aria-expanded="false">
+                                <span class="category-badge pricing">Pricing</span>
+                                <span>Can I upgrade or downgrade my plan?</span>
+                                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="accordion-content">
+                                <p>Yes, you can change your plan anytime from your account settings, with adjustments applied at the next billing cycle.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item" data-category="pricing">
+                            <button class="accordion-header" aria-expanded="false">
+                                <span class="category-badge pricing">Pricing</span>
+                                <span>Do you offer team or enterprise plans?</span>
+                                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="accordion-content">
+                                <p>Yes, we provide custom plans for teams and enterprises. Contact our <a href="contact.html" class="text-primary">support team</a> for more information.</p>
+                            </div>
+                        </div>
+                        <!-- Technical -->
+                        <div class="accordion-item" data-category="technical">
+                            <button class="accordion-header" aria-expanded="false">
+                                <span class="category-badge technical">Technical</span>
+                                <span>Can I use InterviewAI on mobile?</span>
+                                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="accordion-content">
+                                <p>Yes, InterviewAI is responsive and works on smartphones, tablets, and desktops. Use a good microphone for voice features.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item" data-category="technical">
+                            <button class="accordion-header" aria-expanded="false">
+                                <span class="category-badge technical">Technical</span>
+                                <span>What powers InterviewAI?</span>
+                                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="accordion-content">
+                                <p>InterviewAI uses Google’s Gemini model, enhanced with proprietary training for interviewing, integrating speech recognition and NLP.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item" data-category="technical">
+                            <button class="accordion-header" aria-expanded="false">
+                                <span class="category-badge technical">Technical</span>
+                                <span>Do I need to install any software?</span>
+                                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="accordion-content">
+                                <p>No, InterviewAI is web-based and runs in your browser, requiring only an internet connection and a modern browser.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item" data-category="technical">
+                            <button class="accordion-header" aria-expanded="false">
+                                <span class="category-badge technical">Technical</span>
+                                <span>What browsers are supported?</span>
+                                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="accordion-content">
+                                <p>InterviewAI supports the latest versions of Chrome, Firefox, Safari, and Edge for optimal performance.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item" data-category="technical">
+                            <button class="accordion-header" aria-expanded="false">
+                                <span class="category-badge technical">Technical</span>
+                                <span>How accurate is voice recognition?</span>
+                                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="accordion-content">
+                                <p>Our voice recognition is highly accurate in quiet environments, leveraging advanced speech-to-text technology for reliable transcription.</p>
+                            </div>
+                        </div>
+                        <!-- Privacy -->
+                        <div class="accordion-item" data-category="privacy">
+                            <button class="accordion-header" aria-expanded="false">
+                                <span class="category-badge privacy">Privacy</span>
+                                <span>Is my interview data private?</span>
+                                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="accordion-content">
+                                <p>Your data is encrypted and secure. We don’t share it with third parties. Delete your data via account settings. See our <a href="privacy.html" class="text-primary">privacy policy</a>.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item" data-category="privacy">
+                            <button class="accordion-header" aria-expanded="false">
+                                <span class="category-badge privacy">Privacy</span>
+                                <span>How is my data stored?</span>
+                                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="accordion-content">
+                                <p>Data is stored on secure, encrypted cloud servers compliant with GDPR and CCPA standards.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item" data-category="privacy">
+                            <button class="accordion-header" aria-expanded="false">
+                                <span class="category-badge privacy">Privacy</span>
+                                <span>Can I opt out of data analytics?</span>
+                                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="accordion-content">
+                                <p>Yes, you can disable analytics tracking in your account settings to opt out of performance data collection.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item" data-category="privacy">
+                            <button class="accordion-header" aria-expanded="false">
+                                <span class="category-badge privacy">Privacy</span>
+                                <span>Do you use my data to train AI?</span>
+                                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="accordion-content">
+                                <p>We use anonymized, aggregated data to improve our AI, but you can opt out of this in your privacy settings.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item" data-category="privacy">
+                            <button class="accordion-header" aria-expanded="false">
+                                <span class="category-badge privacy">Privacy</span>
+                                <span>What happens to my data if I delete my account?</span>
+                                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="accordion-content">
+                                <p>Upon account deletion, all your personal data is permanently removed from our servers within 30 days.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-cta text-center">
+                    <h2>Still Have Questions?</h2>
+                    <p>Contact our support team for personalized assistance.</p>
+                </div>
+                  
+            
+            </div>
+        </section>
+    </main>
+
+   <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="{% url 'landing' %}" class="logo">
+                        <img src="{% static 'images/logo.svg' %}" alt="InterviewAI" class="footer-logo">
+                    </a>
+                    <p class="brand-description">
+                        InterviewAI uses advanced AI to prepare you for job interviews with realistic mock interviews and personalized feedback.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Facebook">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Twitter">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="LinkedIn">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zM17.5 6.5h.01"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3 class="footer-title">Resources</h3>
+                    <ul class="link-list">
+                        <li><a href="{% url 'guide' %}">How it Works</a></li>
+                        <li><a href="{% url 'pricing' %}">Pricing</a></li>
+                        <li><a href="{% url 'faq' %}">FAQ</a></li>
+                        <li><a href="{% url 'blog' %}">Blog</a></li>
+                        <li><a href="{% url 'testimonials' %}">Testimonials</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3 class="footer-title">Company</h3>
+                    <ul class="link-list">
+                        <li><a href="{% url 'about' %}">About Us</a></li>
+                        <li><a href=" {% url 'contact' %}">Contact Us</a></li>
+                        <li><a href="{% url 'privacy' %}">Privacy Policy</a></li>
+                        <li><a href="{% url 'terms' %}">Terms of Service</a></li>
+                    </ul>
+                </div>
+            <div class="footer-bottom">
+                <p class="copyright">© <span id="current-year"></span> InterviewAI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'C:\Users\HP\Desktop\MockupFinalProject\static\faq\faq.js' %}"></script>
+</body>
+</html>

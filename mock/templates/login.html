@@ -1,0 +1,213 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - InterviewAI {% block title %}{% endblock %}</title>
+    <meta name="description" content="Sign in to your InterviewAI account to continue practicing interviews.">
+    <meta name="author" content="InterviewAI">
+    <meta property="og:title" content="Login - InterviewAI">
+    <meta property="og:description" content="Sign in to your InterviewAI account to continue practicing interviews.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="{% static 'images/og-image.png' %}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@interviewai">
+    <meta name="twitter:image" content="{% static 'images/twitter-image.png' %}">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'login/login.css' %}">
+    <script src="{% static 'login/login.js' %}"></script>
+    <link rel="icon" href="{% static 'images/logo.svg' %}">
+</head>
+<body>
+
+<div id="notification" class="notification hidden">
+    <span id="notification-message"></span>
+</div>
+
+<nav class="navbar">
+    <div class="container">
+        <a href="{% url 'landing' %}" class="logo">
+            <img src="{% static 'images/logo.svg' %}" alt="InterviewAI">
+        </a>
+        <div class="desktop-nav">
+            <div class="nav_contents">
+                <a href="{% url 'landing' %}" class="nav-link {% if request.resolver_match.url_name == 'landing' %}active{% endif %}">Home</a>
+                <a href="{% url 'guide' %}" class="nav-link {% if request.resolver_match.url_name == 'guide' %}active{% endif %}">How it Works</a>
+                <a href="{% url 'faq' %}" class="nav-link {% if request.resolver_match.url_name == 'faq' %}active{% endif %}">FAQ</a>
+                <a href="{% url 'about' %}" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About Us</a>
+                <a href="{% url 'contact' %}" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a>
+            </div>
+            {% if user.is_authenticated %}
+                <a href="{% url 'profile' %}" class="btn btn-outline">Profile</a>
+                <a href="{% url 'logout' %}" class="btn btn-primary">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn btn-outline {% if request.resolver_match.url_name == 'login' %}active{% endif %}">Log in</a>
+                <a href="{% url 'signup' %}" class="btn btn-primary {% if request.resolver_match.url_name == 'signup' %}active{% endif %}">Sign up</a>
+            {% endif %}
+        </div>
+        <button class="mobile-menu-btn" aria-label="Toggle menu" aria-expanded="false">
+            <span class="menu-icon"></span>
+        </button>
+    </div>
+    <div class="mobile-nav">
+        <a href="{% url 'landing' %}" class="nav-link {% if request.resolver_match.url_name == 'landing' %}active{% endif %}">Home</a>
+        <a href="{% url 'guide' %}" class="nav-link {% if request.resolver_match.url_name == 'guide' %}active{% endif %}">How it Works</a>
+        <a href="{% url 'faq' %}" class="nav-link {% if request.resolver_match.url_name == 'faq' %}active{% endif %}">FAQ</a>
+        <a href="{% url 'about' %}" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About Us</a>
+        <a href="{% url 'contact' %}" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a>
+        <div class="mobile-buttons">
+            {% if user.is_authenticated %}
+                <a href="{% url 'profile' %}" class="btn btn-outline">Profile</a>
+                <a href="{% url 'logout' %}" class="btn btn-primary">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn btn-outline {% if request.resolver_match.url_name == 'login' %}active{% endif %}">Log in</a>
+                <a href="{% url 'signup' %}" class="btn btn-primary {% if request.resolver_match.url_name == 'signup' %}active{% endif %}">Sign up</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
+{% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+<main>
+    <section class="auth-section">
+        <div class="container">
+            <div class="auth-container">
+                <div class="auth-header">
+                    <h1 class="auth-title">Sign in to InterviewAI</h1>
+                    <p class="auth-subtitle">
+                        Or <a href="{% url 'signup' %}" class="text-primary">create a new account</a>
+                    </p>
+                </div>
+                <div class="auth-card">
+                    <form id="login-form" class="auth-form" method="POST" action="{% url 'login' %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="{{ form.email.id_for_label }}">Email address</label>
+                            <div class="input-icon-wrapper">
+                                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                </svg>
+                                {{ form.email }}
+                            </div>
+                            <span class="error-message" id="email-error">{% if form.errors.email %}{{ form.errors.email.0 }}{% endif %}</span>
+                        </div>
+                        <div class="form-group">
+                            <div class="password-header">
+                                <label for="{{ form.password.id_for_label }}">Password</label>
+                            </div>
+                            <div class="input-icon-wrapper">
+                                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                    <path d="M7 11V7a5 5 0 0110 0v4"></path>
+                                </svg>
+                                {{ form.password }}
+                                <button type="button" class="toggle-password" aria-label="Toggle password visibility">
+                                    <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                </button>
+                            </div>
+                            <span class="error-message" id="password-error">{% if form.errors.password %}{{ form.errors.password.0 }}{% endif %}</span>
+                        </div>
+                        <div class="form-group remember-me">
+                            <div class="checkbox-container">
+                                {{ form.remember_me }}
+                                <label for="{{ form.remember_me.id_for_label }}">Remember me</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+                    </form>
+                    <div class="auth-divider">
+                        <span>Or continue with</span>
+                    </div>
+                    <div class="social-auth">
+                        <a href="{% url 'social:begin' 'google-oauth2' %}" class="social-btn google-btn">
+                            <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2C6.48 2 2 6.48 2 12c0 4.41 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.13 20.17 22 16.41 22 12c0-5.52-4.48-10-10-10z"/>
+                            </svg>
+                            Continue with Google
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="{% url 'landing' %}" class="logo">
+                    <img src="{% static 'images/logo.svg' %}" alt="InterviewAI" class="footer-logo">
+                </a>
+                <p class="brand-description">
+                    InterviewAI uses advanced AI to prepare you for job interviews with realistic mock interviews and personalized feedback.
+                </p>
+                <div class="social-links">
+                    <a href="#" class="social-link" aria-label="Facebook">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Twitter">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link" aria-label="LinkedIn">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Instagram">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zM17.5 6.5h.01"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h3 class="footer-title">Resources</h3>
+                <ul class="link-list">
+                    <li><a href="{% url 'guide' %}">How it Works</a></li>
+                    <li><a href="{% url 'pricing' %}">Pricing</a></li>
+                    <li><a href="{% url 'faq' %}">FAQ</a></li>
+                    <li><a href="{% url 'blog' %}">Blog</a></li>
+                    <li><a href="{% url 'testimonials' %}">Testimonials</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3 class="footer-title">Company</h3>
+                <ul class="link-list">
+                    <li><a href="{% url 'about' %}">About Us</a></li>
+                    <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                    <li><a href="{% url 'privacy' %}">Privacy Policy</a></li>
+                    <li><a href="{% url 'terms' %}">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="copyright">© <span id="current-year"></span> InterviewAI. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<script src="{% static 'login/login.js' %}"></script>
+</body>
+</html>

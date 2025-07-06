@@ -1,0 +1,107 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Mockup Interview</title>
+    <link rel="icon" href="{% static 'images/logo.svg' %}">
+    <link rel="stylesheet" href="{% static 'start_interview/start_interview.css' %}" />
+    <style>
+        .loading-spinner {
+            display: none;
+            font-size: 16px;
+            color: #007bff;
+            margin-top: 10px;
+        }
+        .loading-spinner.active {
+            display: block;
+        }
+        .audio-controls {
+            margin-top: 10px;
+        }
+        .audio-controls button {
+            margin-right: 10px;
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .audio-controls button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .popup-error {
+            display: none;
+            position: fixed;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #ffe6e6;
+            color: #d32f2f;
+            padding: 15px 25px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            z-index: 10000;
+            min-width: 250px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        .popup-error.show {
+            display: block;
+            animation: slideDown 0.5s ease-out forwards;
+        }
+        @keyframes slideDown {
+            from { top: -50px; opacity: 0; }
+            to { top: 20px; opacity: 1; }
+        }
+        #timer {
+            display: block;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Interview Session</h1>
+        <div id="question-container">
+            <p id="question-text">Loading question...</p>
+            <div id="loading-spinner" class="loading-spinner">Loading...</div>
+            <div class="audio-controls">
+                <button id="play-audio" onclick="playQuestion()">Play question </button>
+                <button id="pause-audio" onclick="pauseQuestion()" disabled>Pause question</button>
+                <button id="resume-audio" onclick="resumeQuestion()" disabled>Resume question</button>
+            </div>
+            <audio id="audio-player" controls style="display: none;"></audio>
+        </div>
+        <div id="response-container">
+            <textarea id="text-answer" placeholder="Type your answer here..."></textarea>
+            <div id="audio-recorder">
+                <button id="start-recording" onclick="startRecording()">Start Recording answer</button>
+                <button id="stop-recording" onclick="stopRecording()" disabled>Stop Recording answer</button>
+                <p id="recording-status">Not recording</p>
+                <audio id="audio-input" controls></audio>
+            </div>
+            <button id="submit-button" onclick="submitResponse()">Submit</button>
+            <div id="submit-loading" class="loading-spinner">Submitting...</div>
+        </div>
+        <div id="timer">Time Left: <span id="time-left">60</span> seconds</div>
+        <div id="status">Current Question: <span id="current-question">0</span></div>
+        <div id="error" style="color: red; margin-top: 10px;"></div>
+        <div id="success"></div>
+        <div id="popup-error" class="popup-error">Please write or record your answer</div>
+        <div class="interview-card-footer">
+            <a href="{% url 'feedback' %}" id="start-interview" class="btn btn-primary">Finish Interview</a>
+        </div>
+    </div>
+    <script src="{% static 'start_interview/start-interview.js' %}"></script>
+</body>
+</html>

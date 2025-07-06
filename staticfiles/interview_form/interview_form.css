@@ -1,0 +1,296 @@
+/* Global Styles */
+:root {
+    --primary-color: #4f46e5;
+    --primary-hover-color: #4338ca;
+    --text-color: #1f2937;
+    --text-secondary: #6b7280;
+    --border-color: #d1d5db;
+    --bg-color: #f3f4f6;
+    --container-bg: #ffffff;
+    --input-bg: #ffffff;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --transition: all 0.2s ease;
+    --radius: 0.375rem;
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--bg-color);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: var(--spacing-lg);
+    color: var(--text-color);
+}
+
+/* Container */
+.container {
+    max-width: 800px;
+    width: 100%;
+    background-color: var(--container-bg);
+    padding: var(--spacing-xl);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+/* Header */
+.header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.icon-header {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-sm);
+}
+
+h2 {
+    color: var(--text-color);
+    font-size: 1.875rem;
+    font-weight: 800;
+    margin-bottom: var(--spacing-xs);
+}
+
+p.subtitle {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+/* Form Grid */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+/* Full-width field */
+.form-group.full-width {
+    grid-column: span 2;
+}
+
+/* Resume & Notes should be full width */
+.resume-section,
+.notes-section {
+    grid-column: span 2;
+}
+
+/* Form Groups */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: var(--spacing-md);
+}
+
+.form-group.focused {
+    color: var(--primary-color);
+}
+
+label {
+    color: var(--text-color);
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: var(--spacing-xs);
+    display: flex;
+    align-items: center;
+}
+
+label i {
+    margin-right: var(--spacing-xs);
+    color: var(--primary-color);
+}
+
+/* Inputs and Selects */
+input, select, textarea {
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 0.875rem;
+    width: 100%;
+    background-color: var(--input-bg);
+    transition: var(--transition);
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+/* Custom Select */
+.select-wrapper {
+    position: relative;
+}
+
+.select-wrapper select {
+    appearance: none;
+    padding-right: 30px;
+}
+
+.select-wrapper i {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: var(--text-secondary);
+}
+
+/* File Input */
+.file-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.file-input-wrapper input[type="file"] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.file-input-label {
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: var(--spacing-sm) var(--spacing-md);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.file-input-label:hover {
+    background-color: #e5e7eb;
+}
+
+.file-input-label i {
+    margin-right: var(--spacing-sm);
+    color: var(--primary-color);
+}
+
+/* Buttons */
+.btn-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    grid-column: span 2;
+    margin-top: var(--spacing-lg);
+}
+
+.btn {
+    background-color: var(--primary-color);
+    color: white;
+    padding: var(--spacing-sm) var(--spacing-xl);
+    border: none;
+    border-radius: var(--radius);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.btn i {
+    margin-right: var(--spacing-sm);
+}
+
+.btn:hover {
+    background-color: var(--primary-hover-color);
+    transform: translateY(-2px);
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+}
+
+.btn-outline:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Preview Section */
+.preview {
+    margin-top: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background-color: #f9fafb;
+    border-radius: var(--radius);
+    display: none;
+    border: 1px solid #e5e7eb;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.preview-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.preview-header i {
+    color: var(--primary-color);
+    margin-right: var(--spacing-sm);
+    font-size: 1.2rem;
+}
+
+.preview h3 {
+    color: var(--text-color);
+    font-size: 1.125rem;
+    font-weight: 500;
+}
+
+.preview p {
+    color: var(--text-color);
+    font-size: 0.875rem;
+    margin: var(--spacing-xs) 0;
+    display: flex;
+}
+
+.preview p strong {
+    min-width: 180px;
+    display: inline-block;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group.full-width,
+    .resume-section,
+    .notes-section {
+        grid-column: span 1;
+    }
+
+    .btn-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--spacing-sm);
+    }
+}
