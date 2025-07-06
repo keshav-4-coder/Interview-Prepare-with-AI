@@ -1,0 +1,21 @@
+# Python/Django
+venv/
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python
+env/
+.env
+*.sqlite3
+staticfiles/
+*.db
+
+# IDE and OS files
+.idea/
+*.DS_Store
+
+# Sensitive data
+*.pem
+*.key
+*.cert
