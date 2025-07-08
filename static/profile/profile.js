@@ -1,31 +1,6 @@
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-const csrftoken = getCookie('csrftoken');
-
-    // Sidebar tab switching
-    document.querySelectorAll('.sidebar-nav .nav-item').forEach(item => {
-        item.addEventListener('click', function(e) {
-            e.preventDefault();
-            document.querySelectorAll('.sidebar-nav .nav-item').forEach(i => i.classList.remove('active'));
-            this.classList.add('active');
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            const tabId = this.getAttribute('data-tab') + '-tab';
-            const tabContent = document.getElementById(tabId);
-            if (tabContent) tabContent.classList.add('active');
-        });
-    });
+document.addEventListener('DOMContentLoaded', () => {
+    // Set current year in footer
+    document.getElementById('current-year').textContent = new Date().getFullYear();
 
     // Mobile menu toggle
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
@@ -38,15 +13,45 @@ const csrftoken = getCookie('csrftoken');
         });
     }
 
+    // Get CSRF token
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+
+    // Sidebar tab switching
+    document.querySelectorAll('.sidebar-nav .nav-item').forEach(item => {
+        item.addEventListener('click', e => {
+            e.preventDefault();
+            document.querySelectorAll('.sidebar-nav .nav-item').forEach(i => i.classList.remove('active'));
+            item.classList.add('active');
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            const tabId = item.getAttribute('data-tab') + '-tab';
+            const tabContent = document.getElementById(tabId);
+            if (tabContent) tabContent.classList.add('active');
+        });
+    });
+
     // Profile photo upload
     const changePhotoBtn = document.getElementById('changePhotoBtn');
     const profilePictureUpload = document.getElementById('profilePictureUpload');
     const profileAvatar = document.getElementById('profileAvatar');
     if (changePhotoBtn && profilePictureUpload && profileAvatar) {
-        changePhotoBtn.addEventListener('click', function() {
+        changePhotoBtn.addEventListener('click', () => {
             profilePictureUpload.click();
         });
-        profilePictureUpload.addEventListener('change', async function(e) {
+        profilePictureUpload.addEventListener('change', async e => {
             const file = e.target.files[0];
             if (file) {
                 const formData = new FormData();
@@ -54,15 +59,12 @@ const csrftoken = getCookie('csrftoken');
                 try {
                     const response = await fetch('/profile/', {
                         method: 'POST',
-                        headers: {
-                            'X-CSRFToken': csrftoken,
-                            'X-Requested-With': 'XMLHttpRequest'
-                        },
+                        headers: { 'X-CSRFToken': csrftoken, 'X-Requested-With': 'XMLHttpRequest' },
                         body: formData
                     });
                     const data = await response.json();
                     if (response.ok) {
-                        profileAvatar.src = URL.createObjectURL(file); // Update avatar locally
+                        profileAvatar.src = URL.createObjectURL(file);
                         showNotification('Profile picture updated successfully!');
                     } else {
                         showNotification(data.error || 'Failed to update profile picture.', true);
@@ -75,13 +77,15 @@ const csrftoken = getCookie('csrftoken');
         });
     }
 
-    // Profile Form Save
+    // Profile form submission
     const profileForm = document.getElementById('profileForm');
     if (profileForm) {
-        profileForm.addEventListener('submit', async function(e) {
+        profileForm.addEventListener('submit', async e => {
             e.preventDefault();
+            document.querySelectorAll('.error-message').forEach(span => span.remove());
             const formData = new FormData();
-            formData.append('full_name', `${document.getElementById('firstName').value.trim()} ${document.getElementById('lastName').value.trim()}`);
+            formData.append('first_name', document.getElementById('firstName').value.trim());
+            formData.append('last_name', document.getElementById('lastName').value.trim());
             formData.append('email', document.getElementById('email').value.trim());
             formData.append('phone', document.getElementById('phone').value.trim());
             formData.append('location', document.getElementById('location').value.trim());
@@ -92,17 +96,13 @@ const csrftoken = getCookie('csrftoken');
             try {
                 const response = await fetch('/profile/', {
                     method: 'POST',
-                    headers: {
-                        'X-CSRFToken': csrftoken,
-                        'X-Requested-With': 'XMLHttpRequest'
-                    },
+                    headers: { 'X-CSRFToken': csrftoken, 'X-Requested-With': 'XMLHttpRequest' },
                     body: formData
                 });
                 const data = await response.json();
                 if (response.ok) {
-                    // Update sidebar display
-                    document.getElementById('profileDisplayName').textContent = `${document.getElementById('firstName').value.trim()} ${document.getElementById('lastName').value.trim()}`;
-                    document.getElementById('profileDisplayRole').textContent = document.getElementById('profession').value.trim();
+                    document.getElementById('profileDisplayName').textContent = `${document.getElementById('firstName').value.trim()} ${document.getElementById('lastName').value.trim()}`.trim();
+                    document.getElementById('profileDisplayRole').textContent = document.getElementById('profession').value.trim() || 'User';
                     showNotification('Profile updated successfully!');
                 } else {
                     Object.keys(data).forEach(field => {
@@ -124,20 +124,22 @@ const csrftoken = getCookie('csrftoken');
         });
     }
 
-    // Profile Form Cancel
+    // Profile form cancel
     const btnCancel = document.querySelector('.btn-cancel');
     if (btnCancel) {
-        btnCancel.addEventListener('click', function() {
+        btnCancel.addEventListener('click', () => {
             profileForm.reset();
+            loadProfileData();
             showNotification('Profile changes canceled.');
         });
     }
 
     // Settings toggles
     document.querySelectorAll('.toggle').forEach(toggle => {
-        toggle.addEventListener('click', async function() {
-            this.classList.toggle('active');
-            const setting = this.getAttribute('data-setting');
+        toggle.addEventListener('click', async () => {
+            const isActive = toggle.classList.contains('active');
+            toggle.classList.toggle('active');
+            const setting = toggle.getAttribute('data-setting');
             try {
                 const response = await fetch('/profile/settings/', {
                     method: 'POST',
@@ -146,19 +148,69 @@ const csrftoken = getCookie('csrftoken');
                         'X-CSRFToken': csrftoken,
                         'X-Requested-With': 'XMLHttpRequest'
                     },
-                    body: JSON.stringify({ [setting]: this.classList.contains('active') })
+                    body: JSON.stringify({ [setting]: toggle.classList.contains('active') })
                 });
                 if (!response.ok) {
-                    this.classList.toggle('active'); // Revert toggle on error
+                    toggle.classList.toggle('active');
                     showNotification('Failed to update setting.', true);
                 }
             } catch (error) {
                 console.error('Error:', error);
-                this.classList.toggle('active'); // Revert toggle on error
+                toggle.classList.toggle('active');
                 showNotification('Server error, please try again later.', true);
             }
         });
     });
+
+    // Language and timezone settings
+    const languageSelect = document.getElementById('language');
+    const timezoneSelect = document.getElementById('timezone');
+    if (languageSelect) {
+        languageSelect.addEventListener('change', async () => {
+            try {
+                const response = await fetch('/profile/settings/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrftoken,
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: JSON.stringify({ language: languageSelect.value })
+                });
+                if (response.ok) {
+                    showNotification('Language updated successfully!');
+                } else {
+                    showNotification('Failed to update language.', true);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showNotification('Server error, please try again later.', true);
+            }
+        });
+    }
+    if (timezoneSelect) {
+        timezoneSelect.addEventListener('change', async () => {
+            try {
+                const response = await fetch('/profile/settings/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrftoken,
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: JSON.stringify({ timezone: timezoneSelect.value })
+                });
+                if (response.ok) {
+                    showNotification('Timezone updated successfully!');
+                } else {
+                    showNotification('Failed to update timezone.', true);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showNotification('Server error, please try again later.', true);
+            }
+        });
+    }
 
     // Dynamic scores list
     const sessionsData = window.sessionsData || [];
@@ -186,58 +238,59 @@ const csrftoken = getCookie('csrftoken');
             `;
             scoresList.appendChild(div);
         });
-        // Update metrics
         const totalInterviews = sessionsData.length;
-        const avgScore = sessionsData.reduce((sum, s) => sum + s.average_score, 0) / totalInterviews || 0;
+        const avgScore = sessionsData.reduce((sum, s) => sum + (s.overall_score || 0), 0) / totalInterviews || 0;
         document.getElementById('totalInterviews').textContent = totalInterviews;
         document.getElementById('avgScore').textContent = `${Math.round(avgScore)}%`;
         document.getElementById('sidebarTotalInterviews').textContent = totalInterviews;
         document.getElementById('sidebarAvgScore').textContent = `${Math.round(avgScore)}%`;
+        document.getElementById('progressValue').textContent = `${Math.round(avgScore)}% Improvement`;
+        document.getElementById('progressFill').style.width = `${Math.round(avgScore)}%`;
     }
 
     // Action buttons
-    const manageSubscriptionBtn = document.getElementById('manageSubscriptionBtn');
+    const manageSubscriptionBtn = document.querySelector('.settings-group a[href*="/pricing/"]');
     if (manageSubscriptionBtn) {
-        manageSubscriptionBtn.addEventListener('click', function(e) {
+        manageSubscriptionBtn.addEventListener('click', e => {
             e.preventDefault();
-            window.location.href = '{% url "pricing" %}'; // Redirect to pricing page
+            window.location.href = '/pricing/';
         });
     }
-    const viewBillingBtn = document.getElementById('viewBillingBtn');
+    const viewBillingBtn = document.querySelector('.settings-group a[href="#"]');
     if (viewBillingBtn) {
-        viewBillingBtn.addEventListener('click', function(e) {
+        viewBillingBtn.addEventListener('click', e => {
             e.preventDefault();
             showNotification('Billing history feature is coming soon!');
         });
     }
-    const helpCenterBtn = document.getElementById('helpCenterBtn');
+    const helpCenterBtn = document.querySelector('.settings-group a[href*="/faq/"]');
     if (helpCenterBtn) {
-        helpCenterBtn.addEventListener('click', function(e) {
+        helpCenterBtn.addEventListener('click', e => {
             e.preventDefault();
-            window.location.href = '{% url "faq" %}'; // Redirect to FAQ page
+            window.location.href = '/faq/';
         });
     }
-    const contactSupportBtn = document.getElementById('contactSupportBtn');
+    const contactSupportBtn = document.querySelector('.settings-group a[href*="/contact/"]');
     if (contactSupportBtn) {
-        contactSupportBtn.addEventListener('click', function(e) {
+        contactSupportBtn.addEventListener('click', e => {
             e.preventDefault();
-            window.location.href = '{% url "contact" %}'; // Redirect to contact page
+            window.location.href = '/contact/';
         });
     }
-    const logoutBtn2 = document.getElementById('logoutBtn2');
-    if (logoutBtn2) {
-        logoutBtn2.addEventListener('click', async function(e) {
+    const logoutBtn = document.querySelector('.settings-group a[href*="/logout/"]');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', async e => {
             e.preventDefault();
             try {
-                const response = await fetch('{% url "logout" %}', {
+                const response = await fetch('/logout/', {
                     method: 'POST',
-                    headers: {
-                        'X-CSRFToken': csrftoken,
-                        'X-Requested-With': 'XMLHttpRequest'
-                    }
+                    headers: { 'X-CSRFToken': csrftoken, 'X-Requested-With': 'XMLHttpRequest' }
                 });
                 if (response.ok) {
-                    window.location.href = '{% url "landing" %}';
+                    showNotification('Logged out successfully!');
+                    setTimeout(() => {
+                        window.location.href = '/landing/';
+                    }, 1000);
                 } else {
                     showNotification('Failed to log out.', true);
                 }
@@ -248,25 +301,41 @@ const csrftoken = getCookie('csrftoken');
         });
     }
 
-    // Notification function (similar to login.js)
+    // Notification function from landing page
     function showNotification(message, isError = false) {
-        const notification = document.createElement('div');
-        notification.className = `notification ${isError ? 'error' : ''} visible`;
-        notification.innerHTML = `<span>${message}</span>`;
-        document.body.appendChild(notification);
+        const notification = document.getElementById('notification');
+        const notificationMessage = document.getElementById('notification-message');
+        if (!notification || !notificationMessage) return;
+        notificationMessage.textContent = message;
+        notification.classList.toggle('error', isError);
+        notification.classList.remove('hidden');
+        notification.classList.add('visible');
         setTimeout(() => {
             notification.classList.remove('visible');
-            setTimeout(() => notification.remove(), 300);
+            setTimeout(() => {
+                notification.classList.add('hidden');
+                notification.classList.remove('error');
+                notificationMessage.textContent = '';
+            }, 300);
         }, 3000);
+    }
+
+    // Handle Django messages
+    const messages = document.querySelectorAll('.messages .alert');
+    if (messages.length > 0) {
+        messages.forEach(message => {
+            const messageText = message.textContent.trim();
+            const isError = message.classList.contains('alert-error');
+            showNotification(messageText, isError);
+            message.remove();
+        });
     }
 
     // Initialize profile data
     async function loadProfileData() {
         try {
             const response = await fetch('/profile/', {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
             });
             if (response.ok) {
                 const data = await response.json();
@@ -278,46 +347,35 @@ const csrftoken = getCookie('csrftoken');
                 document.getElementById('profession').value = data.profession || '';
                 document.getElementById('experience').value = data.experience || '0-1';
                 document.getElementById('bio').value = data.bio || '';
-                document.getElementById('profileDisplayName').textContent = `${data.first_name} ${data.last_name}`.trim();
+                document.getElementById('profileDisplayName').textContent = `${data.first_name || ''} ${data.last_name || ''}`.trim() || 'User';
                 document.getElementById('profileDisplayRole').textContent = data.profession || 'User';
+                document.getElementById('currentPlan').textContent = data.plan || 'Free Plan';
                 if (data.profile_picture) {
                     profileAvatar.src = data.profile_picture;
                 }
+                if (data.settings) {
+                    document.querySelectorAll('.toggle').forEach(toggle => {
+                        const setting = toggle.getAttribute('data-setting');
+                        if (data.settings[setting]) {
+                            toggle.classList.add('active');
+                        } else {
+                            toggle.classList.remove('active');
+                        }
+                    });
+                    if (data.settings.language) {
+                        document.getElementById('language').value = data.settings.language;
+                    }
+                    if (data.settings.timezone) {
+                        document.getElementById('timezone').value = data.settings.timezone;
+                    }
+                }
+            } else {
+                showNotification('Failed to load profile data.', true);
             }
         } catch (error) {
             console.error('Error loading profile:', error);
+            showNotification('Server error, please try again later.', true);
         }
     }
     loadProfileData();
 });
-
-
-
-// for notification
-
-const logoutBtn2 = document.getElementById('logoutBtn2');
-if (logoutBtn2) {
-    logoutBtn2.addEventListener('click', async function(e) {
-        e.preventDefault();
-        try {
-            const response = await fetch('/logout/', {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': csrftoken,
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            });
-            if (response.ok) {
-                showNotification('Logged out successfully!');
-                setTimeout(() => {
-                    window.location.href = '/landing/';
-                }, 1000);
-            } else {
-                showNotification('Failed to log out.', true);
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            showNotification('Server error, please try again later.', true);
-        }
-    });
-}
