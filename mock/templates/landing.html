@@ -92,13 +92,18 @@
                     {% else %}
                         <a href="{% url 'login' %}" class="btn btn-primary">Start Interview</a>
                     {% endif %}
-                    <a href="{% url 'guide' %}" class="btn btn-outline">How It Works</a>
+                    <a href="{% url 'guide' %}" class="btn btn-outline-primary">How It Works</a>
                 </div>
             </div>
             <div class="hero-media">
-                <video class="hero-video" autoplay muted loop controls poster="{% static 'images/logo.svg' %}">
-                    <source src="{% static 'videos/How to use.mp4' %}" type="video/mp4">
-                </video>
+                <iframe class="hero-video"
+                    width="560" height="315"
+                    src="https://www.youtube.com/embed/MqhEdEAUHKM?autoplay=1&mute=1&loop=1&playlist=MqhEdEAUHKM"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="autoplay; encrypted-media"
+                    allowfullscreen>
+                </iframe>
             </div>
         </div>
     </section>

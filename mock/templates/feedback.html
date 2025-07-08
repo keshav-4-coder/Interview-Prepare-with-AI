@@ -334,26 +334,6 @@
             <path d="M12 19V5m7 7l-7-7-7 7"></path>
         </svg>
     </button>
-
-    <script>
-        // Pass the feedback data to JavaScript
-        const feedbackData = `{{ feedback|escapejs }}`;
-
-        // Toggle dropdown visibility
-        function toggleDropdown() {
-            const dropdown = document.getElementById('interview-types-dropdown');
-            dropdown.classList.toggle('active');
-        }
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function (event) {
-            const dropdown = document.getElementById('interview-types-dropdown');
-            const button = document.querySelector('.try-another-button');
-            if (!dropdown.contains(event.target) && !button.contains(event.target)) {
-                dropdown.classList.remove('active');
-            }
-        });
-    </script>
     <script src="{% static 'feedback/feedbakc.js' %}"></script>
 </body>
 </html>

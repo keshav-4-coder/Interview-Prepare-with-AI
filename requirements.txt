@@ -7,7 +7,7 @@ annotated-types==0.7.0
 anyio==4.9.0
 asgiref==3.8.1
 attrs==25.3.0
-audioop-lts==0.2.1
+#audioop-lts==0.2.1
 cachetools==5.5.2
 certifi==2025.4.26
 cffi==1.17.1
@@ -28,7 +28,7 @@ filelock==3.18.0
 fonttools==4.58.4
 frozenlist==1.6.0
 google-ai-generativelanguage==0.6.15
-google-api-core==2.25.0rc1
+#google-api-core==2.25.0rc1
 google-api-python-client==2.169.0
 google-auth==2.40.1
 google-auth-httplib2==0.2.0
