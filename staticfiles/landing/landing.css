@@ -851,7 +851,44 @@ body {
 
 
 
+/* for login and logout successfull poppup */
 
+/* Base styles for notification */
+.notification {
+    position: fixed;
+    top: -100px; /* Start above the viewport */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #10b981; /* Green for success */
+    color: white;
+    padding: 16px 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    transition: top 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    opacity: 0;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.notification.error {
+    background-color: #ef4444; /* Red for error */
+}
+
+.notification.visible {
+    top: 20px; /* Slide to this position */
+    opacity: 1;
+}
+
+.notification.hidden {
+    display: none;
+}
+
+.notification-message {
+    font-size: 16px;
+    font-weight: 500;
+}
 
 
 

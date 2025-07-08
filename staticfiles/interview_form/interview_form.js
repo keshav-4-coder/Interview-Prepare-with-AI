@@ -2,6 +2,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('interviewForm');
     const fileInput = document.getElementById('resume');
     const fileLabel = document.querySelector('.file-input-label span');
+    const interviewTypeSelect = document.getElementById('interviewType');
+
+    // Pre-fill interview type from URL query parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const interviewType = urlParams.get('interviewType');
+    if (interviewType && interviewTypeSelect) {
+        interviewTypeSelect.value = interviewType;
+    }
 
     // Handle file input change
     fileInput.addEventListener('change', function () {

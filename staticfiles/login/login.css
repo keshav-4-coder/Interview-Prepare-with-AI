@@ -688,3 +688,46 @@ body {
         margin-left: 0.5rem;
     }
 }
+
+
+
+
+/* for login and logout successfull poppup */
+
+/* Notification Styles */
+.notification {
+    position: fixed;
+    top: calc(var(--navbar-height) + 20px);
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--success-color);
+    color: white;
+    padding: 16px 24px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    z-index: 1000;
+    transition: top 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    opacity: 0;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    display: none;
+}
+
+.notification.error {
+    background-color: var(--error-color);
+}
+
+.notification.visible {
+    display: block;
+    opacity: 1;
+}
+
+.notification.hidden {
+    display: none;
+}
+
+.notification-message {
+    font-size: 16px;
+    font-weight: 500;
+}

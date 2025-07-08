@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isValid) {
             const formData = new FormData(loginForm);
             try {
-                const response = await fetch('{% url "login" %}', {
+                const response = await fetch('/login/', {
                     method: 'POST',
                     headers: {
                         'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
@@ -57,20 +57,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 if (response.ok) {
-                    showNotification('Login successful!');
+                    const data = await response.json();
+                    showNotification('Login successful! Redirecting...');
                     setTimeout(() => {
-                        window.location.href = '{% url "landing" %}';
+                        window.location.href = data.redirect || '/landing/';
                     }, 1000);
                 } else {
                     const data = await response.json();
-                    if (data.error) {
-                        emailError.textContent = data.error;
-                        passwordError.textContent = '';
-                        showNotification(data.error, true);
+                    if (typeof data.error === 'object') {
+                        emailError.textContent = data.error.email || '';
+                        passwordError.textContent = data.error.password || '';
+                        showNotification('Please correct the errors in the form.', true);
                     } else {
-                        emailError.textContent = data.email ? data.email : '';
-                        passwordError.textContent = data.password ? data.password : '';
-                        showNotification('Invalid email or password.', true);
+                        emailError.textContent = data.error || 'Invalid email or password.';
+                        passwordError.textContent = '';
+                        showNotification(data.error || 'Invalid email or password.', true);
                     }
                 }
             } catch (error) {
@@ -121,19 +122,44 @@ document.addEventListener('DOMContentLoaded', () => {
             message.remove();
         });
     }
+
+
 });
 
-function showNotification(message, isError = false) {
-    const notification = document.getElementById('notification');
-    const notificationMessage = document.getElementById('notification-message');
-    notificationMessage.textContent = message;
-    notification.classList.toggle('error', isError);
-    notification.classList.add('visible');
-    setTimeout(() => {
-        notification.classList.remove('visible');
+
+/* static/js/notification.js */
+document.addEventListener('DOMContentLoaded', () => {
+    // Notification function
+    function showNotification(message, isError = false) {
+        const notification = document.getElementById('notification');
+        const notificationMessage = document.getElementById('notification-message');
+        if (!notification || !notificationMessage) return;
+
+        notificationMessage.textContent = message;
+        notification.classList.toggle('error', isError);
+        notification.classList.remove('hidden');
+        notification.classList.add('visible');
         setTimeout(() => {
-            notification.classList.remove('error');
-            notificationMessage.textContent = '';
-        }, 500);
-    }, 3000);
-}
+            notification.classList.remove('visible');
+            setTimeout(() => {
+                notification.classList.add('hidden');
+                notification.classList.remove('error');
+                notificationMessage.textContent = '';
+            }, 300);
+        }, 3000);
+    }
+
+    // Handle Django messages
+    const messages = document.querySelectorAll('.messages .alert');
+    if (messages.length > 0) {
+        messages.forEach(message => {
+            const messageText = message.textContent.trim();
+            const isError = message.classList.contains('alert-error');
+            showNotification(messageText, isError);
+            message.parentElement.remove();
+        });
+    }
+
+    // Expose showNotification globally
+    window.showNotification = showNotification;
+});

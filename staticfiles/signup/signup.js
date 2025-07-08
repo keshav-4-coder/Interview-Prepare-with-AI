@@ -73,6 +73,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 emailValid = data.valid;
                 if (!data.valid) {
                     emailError.textContent = data.error || 'This email has already been used.';
+                } else {
+                    emailError.textContent = '';
                 }
             } catch (error) {
                 console.error('Error checking email:', error);
@@ -160,20 +162,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 const response = await fetch('/signup/', {
                     method: 'POST',
                     headers: {
-                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                        'X-Requested-With': 'XMLHttpRequest'
                     },
                     body: formData
                 });
 
                 if (response.ok) {
-                    showNotification('Signup successful! Please log in.');
+                    showNotification('Signup successful! Redirecting to login...');
                     setTimeout(() => {
                         window.location.href = '/login/';
                     }, 1000);
                 } else {
                     const data = await response.json();
-                    emailError.textContent = data.email ? data.email[0] : 'This email has already been used.';
-                    showNotification('Error during signup: ' + (data.email ? data.email[0] : 'Please check your input.'), true);
+                    if (data.errors) {
+                        if (data.errors.full_name) fullNameError.textContent = data.errors.full_name[0];
+                        if (data.errors.email) emailError.textContent = data.errors.email[0];
+                        if (data.errors.password) passwordError.textContent = data.errors.password[0];
+                        if (data.errors.agree_to_terms) termsError.textContent = data.errors.agree_to_terms[0];
+                        showNotification('Please correct the errors in the form.', true);
+                    } else {
+                        emailError.textContent = 'An error occurred during signup.';
+                        showNotification('An error occurred during signup.', true);
+                    }
                 }
             } catch (error) {
                 console.error('Error:', error);
@@ -268,19 +279,27 @@ document.addEventListener('DOMContentLoaded', () => {
             message.remove();
         });
     }
+
+
+
+    }
 });
 
 function showNotification(message, isError = false) {
     const notification = document.getElementById('notification');
     const notificationMessage = document.getElementById('notification-message');
+    if (!notification || !notificationMessage) return;
+
     notificationMessage.textContent = message;
     notification.classList.toggle('error', isError);
+    notification.classList.remove('hidden');
     notification.classList.add('visible');
     setTimeout(() => {
         notification.classList.remove('visible');
         setTimeout(() => {
+            notification.classList.add('hidden');
             notification.classList.remove('error');
             notificationMessage.textContent = '';
-        }, 500);
+        }, 300); // Match CSS transition duration
     }, 3000);
 }

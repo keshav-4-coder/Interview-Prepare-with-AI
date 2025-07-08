@@ -22,5 +22,42 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, { threshold: 0.2 });
 
-    elements.forEach(element => observer.observe(element));
+    elements.forEach(element => observer.observe(element)); 
+
+
+    // Show notifications from messages in popup
+
+    const messages = document.querySelectorAll('.messages .alert');
+    if (messages.length > 0) {
+        messages.forEach(message => {
+            const messageText = message.textContent.trim();
+            const isError = message.classList.contains('alert-error');
+            showNotification(messageText, isError);
+            message.remove();
+        });
+    }
+
+
 });
+
+
+
+
+function showNotification(message, isError = false) {
+    const notification = document.getElementById('notification');
+    const notificationMessage = document.getElementById('notification-message');
+    if (!notification || !notificationMessage) return;
+
+    notificationMessage.textContent = message;
+    notification.classList.toggle('error', isError);
+    notification.classList.remove('hidden');
+    notification.classList.add('visible');
+    setTimeout(() => {
+        notification.classList.remove('visible');
+        setTimeout(() => {
+            notification.classList.add('hidden');
+            notification.classList.remove('error');
+            notificationMessage.textContent = '';
+        }, 300); // Match CSS transition duration
+    }, 3000);
+}
