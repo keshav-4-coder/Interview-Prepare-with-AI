@@ -95,7 +95,7 @@ body {
 }
 
 .btn-primary {
-    background: var(--gradient);
+    background: var(--primary-color);
     color: var(--text-white);
     border: none;
 }
